@@ -1,0 +1,1 @@
+print("this is a test" + chr(0) + "string")
