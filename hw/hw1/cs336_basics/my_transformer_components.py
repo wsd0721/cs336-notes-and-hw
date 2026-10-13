@@ -102,3 +102,27 @@ def softmax(
     exp_sum = torch.sum(exp_x, dim=-1, keepdim=True)
     soft_x = exp_x / exp_sum
     return soft_x.transpose(dim, -1)
+
+def scaled_dot_product_attention(
+    Q: torch.Tensor,
+    K: torch.Tensor,
+    V: torch.Tensor,
+    mask: torch.Tensor | None = None,
+) -> torch.Tensor:
+    """
+    缩放点积注意力，支持掩码
+
+    Args:
+        Q, K, V：输入向量Query， Key，Value
+        mask：掩码，1代表参与score计算
+
+    Returns:
+        注意力结果，形状与V相同
+    """
+    d_k = Q.size(-1)
+    scores = einsum(Q, K, 'batch_size ... seq_q d_k, batch_size ... seq_k d_k -> batch_size ... seq_q seq_k')
+    logits = scores / torch.sqrt(torch.tensor(d_k, dtype=torch.float32))
+    logits = torch.masked_fill(logits, ~mask, -1e9)
+    attn_weights = softmax(logits, -1)
+    attn_out = einsum(attn_weights, V, 'batch_size ... seq_q seq_k, batch_size ... seq_k d_v -> batch_size ... seq_q d_v')
+    return attn_out
