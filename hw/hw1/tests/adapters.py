@@ -11,9 +11,7 @@ from torch import Tensor
 
 from cs336_basics.my_bpe_train import train_bpe
 from cs336_basics.my_bpe_tokenizer import Tokenizer
-from cs336_basics.my_linear import Linear
-from cs336_basics.my_embedding import Embedding
-from cs336_basics.my_rmsnorm import RMSNorm
+from cs336_basics.my_transformer_components import Linear, Embedding, RMSNorm, PositionwiseFeedForward
 
 def run_linear(
     d_in: int,
@@ -92,7 +90,9 @@ def run_swiglu(
     # swiglu.w1.weight.data = w1_weight
     # swiglu.w2.weight.data = w2_weight
     # swiglu.w3.weight.data = w3_weight
-    raise NotImplementedError
+    model = PositionwiseFeedForward(d_model, d_ff)
+    model.load_state_dict({"w1.weight": w1_weight, "w2.weight": w2_weight, "w3.weight": w3_weight})
+    return model(in_features)
 
 
 def run_scaled_dot_product_attention(
