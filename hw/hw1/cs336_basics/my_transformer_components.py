@@ -1,5 +1,6 @@
 from torch import nn
 import torch
+from einops import repeat, einsum
 
 class Linear(nn.Module):
     def __init__(self, in_features, out_features, device=None, dtype=None):
@@ -50,3 +51,33 @@ class PositionwiseFeedForward(nn.Module):
         weights = x1 * torch.sigmoid(x1)
         x2 = x3 * weights
         return self.w2(x2)
+
+class RoPE(nn.Module):
+    def __init__(self, theta: float, d_k: int, max_seq_len: int, device=None):
+        super().__init__()
+        self.theta = theta
+        self.d_k = d_k
+        self.max_seq_len = max_seq_len
+        # 预计算角度
+        k_indices = torch.arange(1, d_k / 2 + 1, device=device, dtype=torch.float32)
+        freqs = self.theta ** ((-2.0 * k_indices + 2) / self.d_k)
+        all_pos = torch.arange(0, max_seq_len, device=device, dtype=torch.float32)
+        angles = einsum(freqs, all_pos, 'half_d, max_seq_len -> max_seq_len half_d')
+        # 预计算正余弦值
+        cos_half = torch.cos(angles)
+        sin_half = torch.sin(angles)
+        cos = repeat(cos_half, "max_seq_len half_d -> max_seq_len half_d two", two=2).flatten(-2, -1)
+        sin = repeat(sin_half, "max_seq_len half_d -> max_seq_len half_d two", two=2).flatten(-2, -1)
+        # 注册buffer，persistent=False，不存进checkpoint
+        self.register_buffer("cos", cos, persistent=False)
+        self.register_buffer("sin", sin, persistent=False)
+
+    def forward(self, x: torch.Tensor, token_positions: torch.Tensor) -> torch.Tensor:
+        # 取对应的正余弦值序列，shape [seq_len, d_k]
+        cos_val = self.cos[token_positions]
+        sin_val = self.sin[token_positions]
+        # 计算结果
+        x_rot = torch.zeros_like(x)
+        x_rot[..., 0::2] = x[..., 0::2] * cos_val[..., 0::2] - x[..., 1::2] * sin_val[..., 0::2]
+        x_rot[..., 1::2] = x[..., 0::2] * sin_val[..., 0::2] + x[..., 1::2] * cos_val[..., 0::2]
+        return x_rot
