@@ -3,6 +3,23 @@ from typing import BinaryIO
 import regex as re
 from collections import Counter, defaultdict
 from multiprocessing import Pool
+import json
+import time
+import cProfile
+import tracemalloc
+
+def gpt2_bytes_to_unicode():
+    """OpenAI GPT‑2 原版 bytes‑to‑unicode"""
+    bs = list(range(ord("!"), ord("~")+1)) + list(range(ord("¡"), ord("¬")+1)) + list(range(ord("®"), ord("ÿ")+1))
+    cs = bs[:]
+    n = 0
+    for b in range(2**8):
+        if b not in bs:
+            bs.append(b)
+            cs.append(256 + n)
+            n += 1
+    cs = [chr(n) for n in cs]
+    return dict(zip(bs, cs))
 
 def find_chunk_boundaries(
     file: BinaryIO,
@@ -158,6 +175,24 @@ def merge_and_update(
             i += 1
     return pair_counts
 
+def save_vocab(vocab: dict[int, bytes], out_path: str):
+    byte2uni = gpt2_bytes_to_unicode()
+    out_dict = {}
+    for token_id, token_bytes in vocab.items():
+        # bytes -> gpt2 unicode字符串
+        s = "".join([byte2uni[b] for b in token_bytes])
+        out_dict[s] = token_id
+    with open(out_path, "w", encoding="utf‑8") as f:
+        json.dump(out_dict, f, ensure_ascii=False, indent=2)
+
+def save_merges(merges: list[tuple[bytes, bytes]], out_path: str):
+    byte2uni = gpt2_bytes_to_unicode()
+    with open(out_path, "w", encoding="utf‑8") as f:
+        for t1_bytes, t2_bytes in merges:
+            s1 = "".join([byte2uni[b] for b in t1_bytes])
+            s2 = "".join([byte2uni[b] for b in t2_bytes])
+            f.write(f"{s1} {s2}\n")
+
 def train_bpe(
     input_path: str | os.PathLike,
     vocab_size: int,
@@ -219,4 +254,27 @@ def train_bpe(
     return vocab, merges
 
 if __name__ == '__main__':
-    train_bpe
+    # Profile：内存追踪
+    tracemalloc.start()
+    pr = cProfile.Profile()
+    pr.enable()
+    # Profile；计时
+    t0 = time.perf_counter()
+    vocab, merges = train_bpe('/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/TinyStoriesV2-GPT4-valid.txt', 1000, ["<|endoftext|>"])
+    t1 = time.perf_counter()
+    pr.disable()
+    current_mem, peak_mem = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+    # 时间，内存结果打印
+    train_time_sec = t1 - t0
+    print(f"Training wall‑clock time: {train_time_sec:.2f} seconds")
+    print(f"Memory current: {current_mem / 1024 /1024:.2f} MB")
+    print(f"Memory peak (training): {peak_mem / 1024 /1024:.2f} MB")
+    # 打印Profile
+    print("\n==== Profiling top cumulative time ====")
+    pr.print_stats(sort="cumulative")
+    pr.dump_stats("bpe_train.prof")
+    print("\nVisualize profile: run `snakeviz bpe_train.prof`")
+    # 保存vocab和merges
+    save_vocab(vocab, '/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/outputs/vocab.json')
+    save_merges(merges, '/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/outputs/merges.json')
