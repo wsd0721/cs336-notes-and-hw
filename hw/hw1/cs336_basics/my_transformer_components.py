@@ -66,18 +66,39 @@ class RoPE(nn.Module):
         # 预计算正余弦值
         cos_half = torch.cos(angles)
         sin_half = torch.sin(angles)
-        cos = repeat(cos_half, "max_seq_len half_d -> max_seq_len half_d two", two=2).flatten(-2, -1)
-        sin = repeat(sin_half, "max_seq_len half_d -> max_seq_len half_d two", two=2).flatten(-2, -1)
         # 注册buffer，persistent=False，不存进checkpoint
-        self.register_buffer("cos", cos, persistent=False)
-        self.register_buffer("sin", sin, persistent=False)
+        self.register_buffer("cos_half", cos_half, persistent=False)
+        self.register_buffer("sin_half", sin_half, persistent=False)
 
     def forward(self, x: torch.Tensor, token_positions: torch.Tensor) -> torch.Tensor:
         # 取对应的正余弦值序列，shape [seq_len, d_k]
-        cos_val = self.cos[token_positions]
-        sin_val = self.sin[token_positions]
+        cos_val = self.cos_half[token_positions]
+        sin_val = self.sin_half[token_positions]
         # 计算结果
         x_rot = torch.zeros_like(x)
-        x_rot[..., 0::2] = x[..., 0::2] * cos_val[..., 0::2] - x[..., 1::2] * sin_val[..., 0::2]
-        x_rot[..., 1::2] = x[..., 0::2] * sin_val[..., 0::2] + x[..., 1::2] * cos_val[..., 0::2]
+        x_rot[..., 0::2] = x[..., 0::2] * cos_val - x[..., 1::2] * sin_val
+        x_rot[..., 1::2] = x[..., 0::2] * sin_val + x[..., 1::2] * cos_val
         return x_rot
+
+def softmax(
+    x: torch.Tensor,
+    dim: int
+) -> torch.Tensor:
+    """
+    SoftMax函数
+
+    Args:
+        x: 输入
+        dim: 执行SoftMax的维度
+
+    Returns:
+        SoftMax的结果
+    """
+    # 把待执行的维度放在最后一维，内存连续性小幅提速
+    x.transpose(dim, -1)
+    max_val = torch.max(x, dim=-1, keepdim=True)[0]
+    x = x - max_val
+    exp_x = torch.exp(x)
+    exp_sum = torch.sum(exp_x, dim=-1, keepdim=True)
+    soft_x = exp_x / exp_sum
+    return soft_x.transpose(dim, -1)
