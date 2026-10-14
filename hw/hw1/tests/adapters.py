@@ -11,7 +11,7 @@ from torch import Tensor
 
 from cs336_basics.my_bpe_train import train_bpe
 from cs336_basics.my_bpe_tokenizer import Tokenizer
-from cs336_basics.my_transformer_components import Linear, Embedding, RMSNorm, PositionwiseFeedForward, RoPE, softmax, scaled_dot_product_attention, MutliHeadSelfAttention, TransformerBlock
+from cs336_basics.my_transformer_components import Linear, Embedding, RMSNorm, PositionwiseFeedForward, RoPE, softmax, scaled_dot_product_attention, MutliHeadSelfAttention, TransformerBlock, TransformerLM
 
 def run_linear(
     d_in: int,
@@ -288,6 +288,7 @@ def run_transformer_block(
         running the Transformer block on the input features while using RoPE.
     """
     model = TransformerBlock(d_model, num_heads, d_ff, theta, max_seq_len)
+    
     model.load_state_dict({
         "attn.qkv.weight": torch.cat([weights['attn.q_proj.weight'], weights['attn.k_proj.weight'], weights['attn.v_proj.weight']], dim=0), 
         "attn.proj.weight": weights['attn.output_proj.weight'], 
@@ -379,7 +380,29 @@ def run_transformer_lm(
         Float[Tensor, "batch_size sequence_length vocab_size"]: Tensor with the predicted unnormalized
         next-word distribution for each token.
     """
-    raise NotImplementedError
+    model = TransformerLM(d_model, num_heads, d_ff, rope_theta, vocab_size, context_length, num_layers)
+
+    sd = {}
+    sd["embedding.weight"] = weights["token_embeddings.weight"]
+    sd["lm_head.weight"] = weights["lm_head.weight"]
+    sd["ln_final.scale"] = weights["ln_final.weight"]
+
+    for i in range(num_layers):
+        prefix = f"transformer_blocks.{i}."
+        ref_prefix = f"layers.{i}."
+        sd[prefix + "attn.qkv.weight"] = torch.cat([
+            weights[ref_prefix + "attn.q_proj.weight"],
+            weights[ref_prefix + "attn.k_proj.weight"],
+            weights[ref_prefix + "attn.v_proj.weight"]
+        ], dim=0)
+        sd[prefix + "attn.proj.weight"] = weights[ref_prefix + "attn.output_proj.weight"]
+        sd[prefix + "norm1.scale"] = weights[ref_prefix + "ln1.weight"]
+        sd[prefix + "ffn.w1.weight"] = weights[ref_prefix + "ffn.w1.weight"]
+        sd[prefix + "ffn.w2.weight"] = weights[ref_prefix + "ffn.w2.weight"]
+        sd[prefix + "ffn.w3.weight"] = weights[ref_prefix + "ffn.w3.weight"]
+        sd[prefix + "norm2.scale"] = weights[ref_prefix + "ln2.weight"]
+    model.load_state_dict(sd)
+    return model(in_indices)
 
 
 def run_rmsnorm(

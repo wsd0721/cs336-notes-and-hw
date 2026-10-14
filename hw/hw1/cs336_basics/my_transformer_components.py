@@ -162,9 +162,6 @@ class MutliHeadSelfAttention(nn.Module):
 class TransformerBlock(nn.Module):
     def __init__(self, d_model: int, num_heads: int, d_ff: int, theta: int, max_seq_len: int):
         super().__init__()
-        self.d_model = d_model
-        self.num_heads = num_heads
-        self.d_ff = d_ff
         # 三大组件：注意力，FFN，norm
         self.attn = MutliHeadSelfAttention(d_model, num_heads, True, theta, max_seq_len)
         self.ffn = PositionwiseFeedForward(d_model, d_ff)
@@ -183,4 +180,24 @@ class TransformerBlock(nn.Module):
         x = self.ffn(x)
         x = x + x_tmp
 
+        return x
+
+class TransformerLM(nn.Module):
+    def __init__(self, d_model: int, num_heads: int, d_ff: int, theta: int, vocab_size: int, context_length: int, num_layers: int):
+        super().__init__()
+        # 组件：embedding，TransformerBlock，norm，LM Head
+        self.embedding = Embedding(vocab_size, d_model)
+        self.transformer_blocks = nn.ModuleList([
+            TransformerBlock(d_model, num_heads, d_ff, theta, context_length)
+            for _ in range(num_layers)
+        ])
+        self.ln_final = RMSNorm(d_model)
+        self.lm_head = Linear(d_model, vocab_size)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x = self.embedding(x)
+        for block in self.transformer_blocks:
+            x = block(x)
+        x = self.ln_final(x)
+        x = self.lm_head(x)
         return x
