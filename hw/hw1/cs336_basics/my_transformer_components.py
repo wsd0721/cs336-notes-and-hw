@@ -1,6 +1,6 @@
 from torch import nn
 import torch
-from einops import repeat, einsum
+from einops import repeat, einsum, rearrange
 
 class Linear(nn.Module):
     def __init__(self, in_features, out_features, device=None, dtype=None):
@@ -126,3 +126,35 @@ def scaled_dot_product_attention(
     attn_weights = softmax(logits, -1)
     attn_out = einsum(attn_weights, V, 'batch_size ... seq_q seq_k, batch_size ... seq_k d_v -> batch_size ... seq_q d_v')
     return attn_out
+
+class MutliHeadSelfAttention(nn.Module):
+    def __init__(self, d_model: int, num_heads: int, apply_rope: bool = True, theta: int = 10000, max_seq_len: int = 10000):
+        super().__init__()
+        self.d_model = d_model
+        self.num_heads = num_heads
+        self.d_k = d_model // num_heads
+        self.apply_rope = apply_rope
+        # 线性投影矩阵
+        self.qkv = Linear(d_model, 3 * d_model)
+        self.proj = Linear(d_model, d_model)
+        if self.apply_rope:
+            self.rope = RoPE(theta, self.d_k, max_seq_len)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # QKV投影 + 多头拆分
+        qkv = self.qkv(x)
+        qkv = rearrange(qkv, 'batch_size seq_len (three h d_k) -> three batch_size h seq_len d_k', three = 3, h = self.num_heads)
+        q, k, v = qkv[0], qkv[1], qkv[2]
+        seq_len = q.size(-2)
+        # 应用RoPE
+        if self.apply_rope:
+            token_positions = torch.arange(seq_len, device=x.device)
+            q = self.rope(q, token_positions)
+            k = self.rope(k, token_positions)
+        # 带因果掩码的自注意力
+        mask = torch.tril(torch.ones(seq_len, seq_len, dtype=torch.bool, device=x.device))
+        v_out = scaled_dot_product_attention(q, k, v, mask)
+        # 合并投影回d_model维
+        v_out = rearrange(v_out, 'batch_size h seq_len d_k -> batch_size seq_len (h d_k)')
+        out = self.proj(v_out)
+        return out
