@@ -11,7 +11,7 @@ from torch import Tensor
 
 from cs336_basics.my_bpe_train import train_bpe
 from cs336_basics.my_bpe_tokenizer import Tokenizer
-from cs336_basics.my_transformer_components import Linear, Embedding, RMSNorm, PositionwiseFeedForward, RoPE, softmax, scaled_dot_product_attention, MutliHeadSelfAttention
+from cs336_basics.my_transformer_components import Linear, Embedding, RMSNorm, PositionwiseFeedForward, RoPE, softmax, scaled_dot_product_attention, MutliHeadSelfAttention, TransformerBlock
 
 def run_linear(
     d_in: int,
@@ -287,7 +287,17 @@ def run_transformer_block(
         Float[Tensor, "batch sequence_length d_model"] Tensor with the output of
         running the Transformer block on the input features while using RoPE.
     """
-    raise NotImplementedError
+    model = TransformerBlock(d_model, num_heads, d_ff, theta, max_seq_len)
+    model.load_state_dict({
+        "attn.qkv.weight": torch.cat([weights['attn.q_proj.weight'], weights['attn.k_proj.weight'], weights['attn.v_proj.weight']], dim=0), 
+        "attn.proj.weight": weights['attn.output_proj.weight'], 
+        "norm1.scale": weights['ln1.weight'], 
+        "ffn.w1.weight": weights['ffn.w1.weight'],
+        "ffn.w2.weight": weights['ffn.w2.weight'],
+        "ffn.w3.weight": weights['ffn.w3.weight'],
+        "norm2.scale": weights['ln2.weight']
+        })
+    return model(in_features)
 
 
 def run_transformer_lm(

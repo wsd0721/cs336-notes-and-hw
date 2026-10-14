@@ -158,3 +158,29 @@ class MutliHeadSelfAttention(nn.Module):
         v_out = rearrange(v_out, 'batch_size h seq_len d_k -> batch_size seq_len (h d_k)')
         out = self.proj(v_out)
         return out
+
+class TransformerBlock(nn.Module):
+    def __init__(self, d_model: int, num_heads: int, d_ff: int, theta: int, max_seq_len: int):
+        super().__init__()
+        self.d_model = d_model
+        self.num_heads = num_heads
+        self.d_ff = d_ff
+        # 三大组件：注意力，FFN，norm
+        self.attn = MutliHeadSelfAttention(d_model, num_heads, True, theta, max_seq_len)
+        self.ffn = PositionwiseFeedForward(d_model, d_ff)
+        self.norm1 = RMSNorm(d_model)
+        self.norm2 = RMSNorm(d_model)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # Attention部分：norm，attn，res
+        x_tmp = x
+        x = self.norm1(x)
+        x = self.attn(x)
+        x = x + x_tmp
+        # FFN部分：norm，ffn，res
+        x_tmp = x
+        x = self.norm2(x)
+        x = self.ffn(x)
+        x = x + x_tmp
+
+        return x
