@@ -201,3 +201,30 @@ class TransformerLM(nn.Module):
         x = self.ln_final(x)
         x = self.lm_head(x)
         return x
+
+if __name__ == '__main__':
+    # 资源核算
+    vocab_size = 50257
+    context_length = 1024
+    num_layers = 48
+    d_model = 1600
+    num_heads = 25
+    d_ff = 4288 # the nearest multiple of 64 to 8/3 × 1600
+    d_k = d_model // num_heads
+
+    # 参数量与内存占用
+    num_parameter_embedding = vocab_size * d_model
+    # RMSNorm，QKV矩阵，proj矩阵，RMSNorm，FFN矩阵
+    num_parameter_transformer = d_model + d_model * (3 * d_model) + d_model * d_model + d_model + 3 * d_model * d_ff
+    num_parameter = num_parameter_embedding + num_layers * (num_parameter_transformer) + d_model + num_parameter_embedding
+    print(f'参数量为: {num_parameter}，合{num_parameter / 1e9}B') # 1640452800 ≈ 1.64B
+    memory = num_parameter * 4
+    print(f'内存占用为: {memory}字节, 合{memory / 1e9}GB') # 6561811200字节 = 6.5618112 GB
+
+    # 矩阵运算的FLOPS，注意embedding层是查表，没有矩阵计算
+    flops_lmhead = 2 * context_length * vocab_size * d_model
+    # (c)四个d到d投影8Ld^2，注意力两个大乘法4L^2d + FFN 6Ld^2，因此，当L较小时，FFN占用大部分计算量；当L>>d时，attn占用大部分计算量
+    flops_transformer = 2 * context_length * d_model * (3 * d_model) + num_heads * 2 * context_length * d_k * context_length + num_heads * 2 * context_length * context_length * d_k + 2 * context_length * d_model * d_model + 3 * 2 * context_length * d_model * d_ff
+    flops_all = num_layers * flops_transformer + flops_lmhead
+    print(f'FLOPS为: {flops_all} = {flops_all:.3e}')
+    # (d)随着num_layers增加，lmhead所占比例下降；随着d增加，attn和lmhead和d成正比，FFN正比于d^2，因此FFN比例上升
