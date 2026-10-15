@@ -12,7 +12,7 @@ from torch import Tensor
 from cs336_basics.my_bpe_train import train_bpe
 from cs336_basics.my_bpe_tokenizer import Tokenizer
 from cs336_basics.my_transformer_components import Linear, Embedding, RMSNorm, PositionwiseFeedForward, RoPE, softmax, scaled_dot_product_attention, MutliHeadSelfAttention, TransformerBlock, TransformerLM
-from cs336_basics.train import cross_entropy, AdamW, coine_scheduler, gradient_clipping
+from cs336_basics.train import cross_entropy, AdamW, coine_scheduler, gradient_clipping, get_batch
 
 def run_linear(
     d_in: int,
@@ -465,7 +465,7 @@ def run_get_batch(
         is the sampled input sequences, and the second tuple item is the corresponding
         language modeling labels.
     """
-    raise NotImplementedError
+    return get_batch(dataset, batch_size, context_length, device)
 
 
 def run_softmax(in_features: Float[Tensor, " ..."], dim: int) -> Float[Tensor, " ..."]:

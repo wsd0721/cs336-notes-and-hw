@@ -2,8 +2,10 @@ from collections.abc import Iterable
 
 import torch
 from torch import einsum
-from einops import reduce
+from einops import reduce, pack
 from math import sqrt, cos, pi
+import numpy.typing as npt
+import numpy as np
 
 def cross_entropy(logits: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
     """
@@ -119,6 +121,31 @@ def gradient_clipping(parameters: Iterable[torch.nn.Parameter], max_l2_norm: flo
                 continue
             p.grad.data *= factor
 
+def get_batch(
+    dataset: npt.NDArray, 
+    batch_size: int, 
+    context_length: int, 
+    device: str
+) -> tuple[torch.Tensor, torch.Tensor]:
+    """
+    批量采样，从超长token序列中采样固定长度序列作为样本
+
+    Args:
+        dataset: 一维token序列
+        batch_size: 批次大小
+        context_length: 样本序列长度
+        device: 设备
+
+    Returns:
+        返回(样本，标签)元组
+    """
+    # 注意使用np的randint，左闭右开；注意最后再转tensor，效率更高
+    start_idxs = np.random.randint(0, len(dataset) - context_length, size=batch_size)
+    batch = np.stack([dataset[start_idx:start_idx + context_length] for start_idx in start_idxs])
+    label = np.stack([dataset[start_idx + 1:start_idx + context_length + 1] for start_idx in start_idxs])
+    batch = torch.from_numpy(batch).to(device)
+    label = torch.from_numpy(label).to(device)
+    return (batch, label)
 
 if __name__ == '__main__':
     batch_size = 1024
