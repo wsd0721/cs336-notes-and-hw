@@ -1,3 +1,5 @@
+from collections.abc import Iterable
+
 import torch
 from torch import einsum
 from einops import reduce
@@ -89,6 +91,34 @@ def coine_scheduler(
     else:
         lr = min_learning_rate
     return lr
+
+def gradient_clipping(parameters: Iterable[torch.nn.Parameter], max_l2_norm: float) ->None:
+    """
+    梯度裁剪
+    
+    Args:
+        parameters: 一系列可训练参数
+        max_l2_norm: 范数阈值
+    
+    参数的梯度应该被原地修改
+    """
+    # 计算l2范数
+    l2_norm = torch.Tensor([0.0])
+    for p in parameters:
+        if p.grad is None:
+            continue
+        grad_square = p.grad.data * p.grad.data
+        l2_norm += reduce(grad_square, 'a b -> ', 'sum')
+    l2_norm = torch.sqrt(l2_norm)
+    # 裁剪
+    if l2_norm > max_l2_norm:
+        eps = 1e-6
+        factor = max_l2_norm / (l2_norm + eps)
+        for p in parameters:
+            if p.grad is None:
+                continue
+            p.grad.data *= factor
+
 
 if __name__ == '__main__':
     batch_size = 1024
