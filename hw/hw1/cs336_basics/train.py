@@ -1,6 +1,7 @@
 import torch
 from torch import einsum
 from einops import reduce
+from math import sqrt
 
 def cross_entropy(logits: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
     """
@@ -25,3 +26,38 @@ def cross_entropy(logits: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
     l = l.squeeze(dim=-1)
     ce = l.mean(dim=-1, keepdim=False)
     return ce
+
+class AdamW(torch.optim.Optimizer):
+    def __init__(self, params, lr: int, weight_decay: int, betas: tuple[float, float], eps: float):
+        defaults = dict(lr=lr, betas=betas, eps=eps, weight_decay=weight_decay)
+        super().__init__(params, defaults)
+
+    def step(self):
+        for group in self.param_groups:
+            lr = group["lr"]
+            beta1, beta2 = group["betas"]
+            eps = group["eps"]
+            wd = group["weight_decay"]
+            # 注意一个p是一个nn.Parameter对象，不一定只有一个参数值
+            for p in group["params"]:
+                if p.grad is None:
+                    continue
+                # get state and grad
+                grad = p.grad.data
+                state = self.state[p]
+                t = state.get("t", 0)
+                m = state.get("m", torch.zeros_like(p.data))
+                v = state.get("v", torch.zeros_like(p.data))
+                # compute new state
+                t += 1
+                m = beta1 * m + (1.0 - beta1) * grad
+                v = beta2 * v + (1.0 - beta2) * (grad * grad)
+                lr_mod = lr * sqrt(1 - beta2 ** t) / (1 - beta1 ** t)
+                # weight_decay
+                p.data -= lr * wd * p.data
+                # gradient descend
+                p.data -= lr_mod * m / (torch.sqrt(v) + eps)
+                # update state
+                state["t"] = t
+                state["m"] = m
+                state["v"] = v
