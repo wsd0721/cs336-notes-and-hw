@@ -1,13 +1,23 @@
-from .my_bpe_train import gpt2_bytes_to_unicode
+import sys
+from pathlib import Path
+BASE_DIR = Path(__file__).parent
+sys.path.insert(0, str(BASE_DIR))
+
+from my_bpe_train import gpt2_bytes_to_unicode
 import json
 import regex as re
 from typing import Iterable, Iterator
 import time
+import os
+import numpy as np
 
 def gpt2_unicode_to_bytes() -> dict[str, bytes]:
-    # 反向映射，用于加载vocab/merges
+    """unicode字符 → bytes对象，GPT2映射反向"""
     b2u = gpt2_bytes_to_unicode()
-    return {u: b for b, u in b2u.items()}
+    u2b = {}
+    for byte_int, uni_char in b2u.items():
+        u2b[uni_char] = bytes([byte_int])
+    return u2b
 
 class Tokenizer:
     def __init__(
@@ -36,27 +46,40 @@ class Tokenizer:
 
     @classmethod
     def from_files(
-        cls, 
-        vocab_filepath: str, 
-        merges_filepath: str, 
+        cls,
+        vocab_filepath: str,
+        merges_filepath: str,
         special_tokens: list[str] | None = None
     ):
         """Construct and return a Tokenizer from a serialized vocabulary and
         list of merges and (optionally) a list of special tokens.
-
         Args:
             vocab_filepath: Path to the serialized vocabulary file.
             merges_filepath: Path to the serialized merges file.
             special_tokens: Optional list of special tokens to register.
-
         Returns:
             A Tokenizer instance built from the given files.
         """
         u2b = gpt2_unicode_to_bytes()
+
+        def _to_bytes(s: str) -> bytes:
+            buf = b""
+            for ch in s:
+                if ch in u2b:
+                    buf += u2b[ch]
+                else:
+                    buf += ch.encode("utf-8")
+            return buf
+
         # 加载vocab
         with open(vocab_filepath, "r", encoding="utf-8") as f:
             json_vocab = json.load(f)
-        vocab = {u2b[uni]: int(idx) for uni, idx in json_vocab}
+        vocab = {}
+        for uni_subword, idx in json_vocab.items():
+            token_id = int(idx)
+            token_bytes = _to_bytes(uni_subword)
+            vocab[token_id] = token_bytes
+
         # 加载merges
         merges = []
         with open(merges_filepath, "r", encoding="utf-8") as f:
@@ -64,8 +87,10 @@ class Tokenizer:
                 line = line.strip()
                 if not line:
                     continue
-                token_pair = line.split()
-                merges.append((u2b[token_pair[0]], u2b[token_pair[1]]))
+                s1, s2 = line.split()
+                b1 = _to_bytes(s1)
+                b2 = _to_bytes(s2)
+                merges.append((b1, b2))
         return cls(vocab, merges, special_tokens)
 
     def pre_tokenize_encode(self, text: str, pattern=None) -> list[tuple[str, bool]]:
@@ -216,10 +241,32 @@ class Tokenizer:
         return token_bytes.decode("utf-8", errors="replace")
 
 if __name__ == '__main__':
-    VOCAB_PATH = '/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/tests/fixtures/gpt2_vocab.json'
-    MERGES_PATH = '/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/tests/fixtures/gpt2_merges.txt'
+    VOCAB_PATH = '/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/outputs/vocab.json'
+    MERGES_PATH = '/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/outputs/merges.json'
     tokenizer = Tokenizer.from_files(VOCAB_PATH, MERGES_PATH)
     test_string = "🙃"
     encoded_ids = tokenizer.encode(test_string)
     decoded_string = tokenizer.decode(encoded_ids)
     assert test_string == decoded_string
+
+    txt_path = "/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/TinyStoriesV2-GPT4-valid.txt"
+    out_dir = "outputs"
+    out_bin_path = os.path.join(out_dir, "train.bin")
+    os.makedirs(out_dir, exist_ok=True)
+
+    # 读取全部文本
+    print(f"Reading text file: {txt_path}")
+    with open(txt_path, "r", encoding="utf-8") as f:
+        full_text = f.read()
+
+    print("Start tokenizing ...")
+    token_ids = tokenizer.encode(full_text)
+    total_tokens = len(token_ids)
+    print(f"Total tokens: {total_tokens}")
+
+    # 使用np.memmap写入uint32，和训练脚本dataset_dtype对齐
+    arr = np.memmap(out_bin_path, dtype=np.uint32, mode="w+", shape=(total_tokens,))
+    arr[:] = np.array(token_ids, dtype=np.uint32)
+    arr.flush()
+    del arr
+    print(f"Token binary saved -> {out_bin_path}")

@@ -23,20 +23,30 @@ def cross_entropy(logits: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
     logits = logits - max_value
     # 计算ℓ𝑖，分子log和e抵消
     exp_logits = torch.exp(logits)
-    exp_sum = reduce(exp_logits, 'l (one v) -> l one', 'sum', one=1)
+    exp_sum = reduce(exp_logits, '... (one v) -> ... one', 'sum', one=1)
     log_exp_sum = torch.log(exp_sum)
     targets = targets.unsqueeze(dim=-1)
     target_value = logits.gather(-1, targets)
     l = -target_value + log_exp_sum
     # 求均值
     l = l.squeeze(dim=-1)
-    ce = l.mean(dim=-1, keepdim=False)
+    # 注意必须全局求均值
+    ce = l.mean()
     return ce
 
+
+
 class AdamW(torch.optim.Optimizer):
-    def __init__(self, params, lr: int, weight_decay: int, betas: tuple[float, float], eps: float):
+    def __init__(self, params, lr: float, weight_decay: int, betas: tuple[float, float], eps: float):
         defaults = dict(lr=lr, betas=betas, eps=eps, weight_decay=weight_decay)
         super().__init__(params, defaults)
+
+    def get_lr(self) -> float:
+        return self.param_groups[0]["lr"]
+
+    def set_lr(self, lr: float):
+        for group in self.param_groups:
+            group["lr"] = lr
 
     def step(self):
         for group in self.param_groups:
@@ -68,7 +78,7 @@ class AdamW(torch.optim.Optimizer):
                 state["m"] = m
                 state["v"] = v
 
-def coine_scheduler(
+def cosine_scheduler(
     it: int,
     max_learning_rate: float,
     min_learning_rate: float,
@@ -112,7 +122,7 @@ def gradient_clipping(parameters: Iterable[torch.nn.Parameter], max_l2_norm: flo
         if p.grad is None:
             continue
         grad_square = p.grad.data * p.grad.data
-        l2_norm += reduce(grad_square, 'a b -> ', 'sum')
+        l2_norm += reduce(grad_square, '... -> ', 'sum')
     l2_norm = torch.sqrt(l2_norm)
     # 裁剪
     if l2_norm > max_l2_norm:
@@ -122,6 +132,26 @@ def gradient_clipping(parameters: Iterable[torch.nn.Parameter], max_l2_norm: flo
             if p.grad is None:
                 continue
             p.grad.data *= factor
+
+def load_memmap_dataset(file_path: str, dtype=np.uint16) -> np.ndarray:
+    """
+    加载数据集，启用内存映射以支持大规模数据集加载
+
+    Args:
+        file_path: 数据集路径
+        dtype: 数据类型
+
+    Returns:
+        token序列
+    """
+
+    arr = np.memmap(
+        filename=file_path,
+        dtype=dtype,
+        mode="r",
+        offset=0
+    )
+    return arr
 
 def get_batch(
     dataset: npt.NDArray, 
@@ -145,8 +175,8 @@ def get_batch(
     start_idxs = np.random.randint(0, len(dataset) - context_length, size=batch_size)
     batch = np.stack([dataset[start_idx:start_idx + context_length] for start_idx in start_idxs])
     label = np.stack([dataset[start_idx + 1:start_idx + context_length + 1] for start_idx in start_idxs])
-    batch = torch.from_numpy(batch).to(device)
-    label = torch.from_numpy(label).to(device)
+    batch = torch.from_numpy(batch).to(device).to(torch.long)
+    label = torch.from_numpy(label).to(device).to(torch.long)
     return (batch, label)
 
 def save_checkpoint(

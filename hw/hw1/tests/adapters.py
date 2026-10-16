@@ -12,7 +12,7 @@ from torch import Tensor
 from cs336_basics.my_bpe_train import train_bpe
 from cs336_basics.my_bpe_tokenizer import Tokenizer
 from cs336_basics.my_transformer_components import Linear, Embedding, RMSNorm, PositionwiseFeedForward, RoPE, softmax, scaled_dot_product_attention, MutliHeadSelfAttention, TransformerBlock, TransformerLM
-from cs336_basics.train import cross_entropy, AdamW, coine_scheduler, gradient_clipping, get_batch, save_checkpoint, load_checkpoint
+from cs336_basics.utils import cross_entropy, AdamW, coine_scheduler, gradient_clipping, get_batch, save_checkpoint, load_checkpoint
 
 def run_linear(
     d_in: int,
