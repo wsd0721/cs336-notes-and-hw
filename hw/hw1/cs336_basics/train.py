@@ -1,4 +1,6 @@
 from collections.abc import Iterable
+import os
+from typing import IO, BinaryIO
 
 import torch
 from torch import einsum
@@ -146,6 +148,48 @@ def get_batch(
     batch = torch.from_numpy(batch).to(device)
     label = torch.from_numpy(label).to(device)
     return (batch, label)
+
+def save_checkpoint(
+    model: torch.nn.Module,
+    optimizer: torch.optim.Optimizer,
+    iteration: int,
+    out: str | os.PathLike | BinaryIO | IO[bytes],
+):
+    """
+    模型状态保存到文件
+
+    Args:
+        model: 模型
+        optimizer: 优化器
+        iteration: 迭代轮数
+        out: 保存路径
+    """
+    ckpt = {
+        'model_state_dict': model.state_dict(),
+        'optim_state_dict': optimizer.state_dict(),
+        'iter': iteration
+    }
+    torch.save(ckpt, out)
+
+def load_checkpoint(
+    src: str | os.PathLike | BinaryIO | IO[bytes],
+    model: torch.nn.Module,
+    optimizer: torch.optim.Optimizer,
+) -> int:
+    """
+    从文件加载模型
+
+    Args:
+        src: 加载路径
+        model: 模型
+        optimizer: 优化器
+    Returns:
+        迭代轮数
+    """
+    ckpt = torch.load(src)
+    model.load_state_dict(ckpt['model_state_dict'])
+    optimizer.load_state_dict(ckpt['optim_state_dict'])
+    return ckpt['iter']
 
 if __name__ == '__main__':
     batch_size = 1024
