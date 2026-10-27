@@ -1,0 +1,22 @@
+python3 my_train.py \
+    --dataset_path dataset/train.bin \
+    --val_dataset_path dataset/valid.bin \
+    --dataset_dtype uint32 \
+    --out_dir outputs/lr_tuning/ \
+    --log_interval 100 \
+    --batch_size 16 \
+    --max_steps 10000 \
+    --warmup_iters 500 \
+    --cosine_iters 10000 \
+    --lr 1e-3 \
+    --max_lr 1e-3 \
+    --min_lr 1e-4 \
+    --d_model 512 \
+    --vocab_size 10000 \
+    --context_length 256 \
+    --num_heads 16 \
+    --d_ff 1344 \
+    --num_layers 4 \
+    --log_interval 100 \
+    --save_interval 10000 \
+    --use_wandb

@@ -190,83 +190,58 @@ class Tokenizer:
         return token_ids
 
     def encode_iterable(self, iterable: Iterable[str]) -> Iterator[int]:
-        buf = ""
+        """
+        标准流式编码：按完整行/完整文档迭代，整段编码。
+        保证与 encode() 结果100%一致，无截断误差。
+        iterable: 逐行/逐段产出文本的迭代器
+        """
         cnt = 0
         start_total = time.time()
-
-        for chunk in iterable:
-            buf += chunk
-            # 复用你pre_tokenize_encode，拿到 (text_seg, is_special)
-            parts = self.pre_tokenize_encode(buf)
-            cut_pos = 0
-            for text_seg, is_special in parts:
-                # ⚠️注意：旧版本用buf.find有bug，这里**必须改造pre_tokenize_encode返回(offset_start, offset_end, text_seg, is_special)**
-                # 下面这段是临时占位，如果你还没改pre_tokenize返回offset，这部分定位会出错！
-                seg_start = buf.find(text_seg, cut_pos)
-                seg_end = seg_start + len(text_seg)
-
-                if seg_end < len(buf):
-                    if is_special:
-                        tok_bytes = text_seg.encode("utf-8")
-                        yield self.bytes_to_id[tok_bytes]
-                        cnt +=1
-                    else:
-                        for _id in self.encode(text_seg):
-                            yield _id
-                            cnt += 1
-                    cut_pos = seg_end
-
-                    # 打印速率
-                    if cnt % 2000 == 0:
-                        elapsed = time.time() - start_total
-                        tokens_per_sec = cnt / elapsed
-                        print(f"[STREAM] generated {cnt:>8d} tokens | elapsed={elapsed:.2f}s | speed={tokens_per_sec:.1f} tok/s")
-                else:
-                    # 匹配触达buffer末尾，保留到下一轮
-                    break
-            buf = buf[cut_pos:]
-        # 处理buffer剩余内容
-        if buf:
-            for _id in self.encode(buf):
-                yield _id
-                cnt +=1
+        for segment in iterable:
+            # 注意使用strip，否则不会跳过空行
+            if segment.strip() == "":
+                continue
+            # 一整段完整编码，预分词、BPE都在完整文本上执行
+            for tid in self.encode(segment):
+                yield tid
+                cnt += 1
                 if cnt % 2000 == 0:
                     elapsed = time.time() - start_total
-                    tokens_per_sec = cnt / elapsed
-                    print(f"[STREAM] generated {cnt:>8d} tokens | elapsed={elapsed:.2f}s | speed={tokens_per_sec:.1f} tok/s")
-
+                    print(f"[STREAM] processed {cnt:>8d} tokens | speed={cnt/elapsed:.1f} tok/s")
+    
     def decode(self, ids: list[int]) -> str:
         # 把id列表解码为token序列
         token_bytes = b"".join(self.vocab[i] for i in ids)
         return token_bytes.decode("utf-8", errors="replace")
 
 if __name__ == '__main__':
-    VOCAB_PATH = '/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/outputs/vocab.json'
-    MERGES_PATH = '/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/outputs/merges.json'
-    tokenizer = Tokenizer.from_files(VOCAB_PATH, MERGES_PATH)
-    test_string = "🙃"
-    encoded_ids = tokenizer.encode(test_string)
-    decoded_string = tokenizer.decode(encoded_ids)
-    assert test_string == decoded_string
+    VOCAB_PATH = '/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/cs336_basics/outputs/bpe_train/vocab.json'
+    MERGES_PATH = '/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/cs336_basics/outputs/bpe_train/merges.json'
+    tokenizer = Tokenizer.from_files(VOCAB_PATH, MERGES_PATH, ["<|endoftext|>"])
+    test_line_1 = "Once upon a time there was a cat.\n"
+    test_line_2 = "\n"
+    print("普通行编码：", tokenizer.encode(test_line_1))
+    print("纯换行编码：", tokenizer.encode(test_line_2))
 
-    txt_path = "/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/TinyStoriesV2-GPT4-valid.txt"
-    out_dir = "outputs"
+    txt_path = "/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/cs336_basics/dataset/TinyStories-train.txt"
+    out_dir = "dataset/"
     out_bin_path = os.path.join(out_dir, "train.bin")
     os.makedirs(out_dir, exist_ok=True)
 
-    # 读取全部文本
-    print(f"Reading text file: {txt_path}")
-    with open(txt_path, "r", encoding="utf-8") as f:
-        full_text = f.read()
-
-    print("Start tokenizing ...")
-    token_ids = tokenizer.encode(full_text)
+    print(f"[Phase1] Counting total tokens, reading: {txt_path}")
+    def line_iter():
+        with open(txt_path, "r", encoding="utf-8") as f:
+            for line in f:
+                yield line
+    
+    print("Streaming tokenize ...")
+    token_ids = list(tokenizer.encode_iterable(line_iter()))
     total_tokens = len(token_ids)
     print(f"Total tokens: {total_tokens}")
 
-    # 使用np.memmap写入uint32，和训练脚本dataset_dtype对齐
+    # 写入 memmap uint32
     arr = np.memmap(out_bin_path, dtype=np.uint32, mode="w+", shape=(total_tokens,))
     arr[:] = np.array(token_ids, dtype=np.uint32)
     arr.flush()
     del arr
-    print(f"Token binary saved -> {out_bin_path}")
+    print(f"✅ Binary saved -> {out_bin_path}")

@@ -116,22 +116,14 @@ def gradient_clipping(parameters: Iterable[torch.nn.Parameter], max_l2_norm: flo
     
     参数的梯度应该被原地修改
     """
-    # 计算l2范数
-    l2_norm = torch.Tensor([0.0])
-    for p in parameters:
-        if p.grad is None:
-            continue
-        grad_square = p.grad.data * p.grad.data
-        l2_norm += reduce(grad_square, '... -> ', 'sum')
-    l2_norm = torch.sqrt(l2_norm)
-    # 裁剪
-    if l2_norm > max_l2_norm:
-        eps = 1e-6
-        factor = max_l2_norm / (l2_norm + eps)
-        for p in parameters:
-            if p.grad is None:
-                continue
-            p.grad.data *= factor
+    grads = [p.grad for p in parameters if p.grad is not None]
+    if not grads:
+        return
+    total_norm = torch.norm(torch.stack([torch.norm(g, 2) for g in grads]), 2)
+    clip_coeff = max_l2_norm / (total_norm + 1e-8)
+    if clip_coeff < 1.0:
+        for g in grads:
+            g.mul_(clip_coeff)
 
 def load_memmap_dataset(file_path: str, dtype=np.uint16) -> np.ndarray:
     """

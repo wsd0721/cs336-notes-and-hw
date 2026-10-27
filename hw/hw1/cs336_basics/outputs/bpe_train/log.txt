@@ -1,0 +1,717 @@
+[MAIN] Dataset: dataset/TinyStories-train.txt
+[MAIN] Output dir: outputs
+[BPE] Raw file size: 1835.14 MB, split into 4 chunks
+[BPE] Start parallel pre-tokenize over 4 chunks ...
+[BPE] Finished parallel pre-tokenize, aggregating counts ...
+[BPE] Total unique pre-token: 68326
+[BPE] Initial pair count: 2273
+[BPE] Starting merge loop ...
+[BPE Merge   50] vocab=307, top_pair=(b'l', b'l'), freq=5235081, remaining_pairs=4806
+[BPE Merge  100] vocab=357, top_pair=(b' d', b'ay'), freq=2713846, remaining_pairs=7126
+[BPE Merge  150] vocab=407, top_pair=(b' b', b'ig'), freq=1719439, remaining_pairs=9052
+[BPE Merge  200] vocab=457, top_pair=(b' ', b'A'), freq=1189930, remaining_pairs=10624
+[BPE Merge  250] vocab=507, top_pair=(b' m', b'an'), freq=852869, remaining_pairs=12056
+[BPE Merge  300] vocab=557, top_pair=(b' say', b's'), freq=689564, remaining_pairs=13307
+[BPE Merge  350] vocab=607, top_pair=(b'all', b'y'), freq=558116, remaining_pairs=14758
+[BPE Merge  400] vocab=657, top_pair=(b'nd', b'er'), freq=466491, remaining_pairs=16237
+[BPE Merge  450] vocab=707, top_pair=(b'udden', b'ly'), freq=394692, remaining_pairs=17403
+[BPE Merge  500] vocab=757, top_pair=(b't', b'y'), freq=338876, remaining_pairs=18569
+[BPE Merge  550] vocab=807, top_pair=(b'il', b'd'), freq=294442, remaining_pairs=19610
+[BPE Merge  600] vocab=857, top_pair=(b' f', b'i'), freq=263939, remaining_pairs=20808
+[BPE Merge  650] vocab=907, top_pair=(b' b', b'ook'), freq=230626, remaining_pairs=21494
+[BPE Merge  700] vocab=957, top_pair=(b' pret', b'ty'), freq=206722, remaining_pairs=22445
+[BPE Merge  750] vocab=1007, top_pair=(b't', b'hing'), freq=187196, remaining_pairs=23252
+[BPE Merge  800] vocab=1057, top_pair=(b'em', b'ber'), freq=169620, remaining_pairs=24021
+[BPE Merge  850] vocab=1107, top_pair=(b' me', b'an'), freq=157237, remaining_pairs=24476
+[BPE Merge  900] vocab=1157, top_pair=(b' do', b'es'), freq=145698, remaining_pairs=25047
+[BPE Merge  950] vocab=1207, top_pair=(b' fe', b'll'), freq=133754, remaining_pairs=25723
+[BPE Merge 1000] vocab=1257, top_pair=(b' re', b'st'), freq=121841, remaining_pairs=26130
+[BPE Merge 1050] vocab=1307, top_pair=(b' car', b's'), freq=114110, remaining_pairs=26455
+[BPE Merge 1100] vocab=1357, top_pair=(b' w', b'ood'), freq=106985, remaining_pairs=27199
+[BPE Merge 1150] vocab=1407, top_pair=(b'H', b'ello'), freq=101153, remaining_pairs=27724
+[BPE Merge 1200] vocab=1457, top_pair=(b' arri', b'ved'), freq=92600, remaining_pairs=28173
+[BPE Merge 1250] vocab=1507, top_pair=(b'as', b'k'), freq=86232, remaining_pairs=28631
+[BPE Merge 1300] vocab=1557, top_pair=(b' p', b'i'), freq=79842, remaining_pairs=29345
+[BPE Merge 1350] vocab=1607, top_pair=(b' sp', b'ark'), freq=75021, remaining_pairs=29957
+[BPE Merge 1400] vocab=1657, top_pair=(b' own', b'er'), freq=69440, remaining_pairs=30702
+[BPE Merge 1450] vocab=1707, top_pair=(b' gr', b'ate'), freq=65637, remaining_pairs=31365
+[BPE Merge 1500] vocab=1757, top_pair=(b' Dad', b'dy'), freq=62079, remaining_pairs=31807
+[BPE Merge 1550] vocab=1807, top_pair=(b' he', b'art'), freq=58364, remaining_pairs=32188
+[BPE Merge 1600] vocab=1857, top_pair=(b'or', b'row'), freq=54330, remaining_pairs=32621
+[BPE Merge 1650] vocab=1907, top_pair=(b' adventure', b's'), freq=51240, remaining_pairs=33057
+[BPE Merge 1700] vocab=1957, top_pair=(b' w', b'he'), freq=48851, remaining_pairs=33346
+[BPE Merge 1750] vocab=2007, top_pair=(b' t', b'iny'), freq=46426, remaining_pairs=33854
+[BPE Merge 1800] vocab=2057, top_pair=(b'st', b'ing'), freq=43858, remaining_pairs=34296
+[BPE Merge 1850] vocab=2107, top_pair=(b' hop', b'e'), freq=41920, remaining_pairs=34705
+[BPE Merge 1900] vocab=2157, top_pair=(b' sear', b'ched'), freq=39838, remaining_pairs=34989
+[BPE Merge 1950] vocab=2207, top_pair=(b' z', b'oom'), freq=37997, remaining_pairs=35412
+[BPE Merge 2000] vocab=2257, top_pair=(b'er', b't'), freq=35965, remaining_pairs=35697
+[BPE Merge 2050] vocab=2307, top_pair=(b' forg', b'ive'), freq=34294, remaining_pairs=36110
+[BPE Merge 2100] vocab=2357, top_pair=(b' c', b'art'), freq=32390, remaining_pairs=36489
+[BPE Merge 2150] vocab=2407, top_pair=(b' be', b'll'), freq=31069, remaining_pairs=36657
+[BPE Merge 2200] vocab=2457, top_pair=(b' cra', b'b'), freq=29950, remaining_pairs=37031
+[BPE Merge 2250] vocab=2507, top_pair=(b'y', b'ing'), freq=28504, remaining_pairs=37327
+[BPE Merge 2300] vocab=2557, top_pair=(b' sa', b've'), freq=27285, remaining_pairs=37684
+[BPE Merge 2350] vocab=2607, top_pair=(b' myster', b'ious'), freq=26310, remaining_pairs=37971
+[BPE Merge 2400] vocab=2657, top_pair=(b' fe', b'ar'), freq=25435, remaining_pairs=38191
+[BPE Merge 2450] vocab=2707, top_pair=(b'er', b'a'), freq=24486, remaining_pairs=38580
+[BPE Merge 2500] vocab=2757, top_pair=(b' c', b'age'), freq=23429, remaining_pairs=38862
+[BPE Merge 2550] vocab=2807, top_pair=(b' we', b'ek'), freq=22467, remaining_pairs=39176
+[BPE Merge 2600] vocab=2857, top_pair=(b' m', b'ic'), freq=21681, remaining_pairs=39320
+[BPE Merge 2650] vocab=2907, top_pair=(b' rel', b'ax'), freq=21113, remaining_pairs=39598
+[BPE Merge 2700] vocab=2957, top_pair=(b' colour', b'ful'), freq=20392, remaining_pairs=39769
+[BPE Merge 2750] vocab=3007, top_pair=(b' toug', b'h'), freq=19612, remaining_pairs=39914
+[BPE Merge 2800] vocab=3057, top_pair=(b' p', b'ump'), freq=19215, remaining_pairs=40291
+[BPE Merge 2850] vocab=3107, top_pair=(b' ca', b'b'), freq=18629, remaining_pairs=40463
+[BPE Merge 2900] vocab=3157, top_pair=(b' fr', b'idge'), freq=18127, remaining_pairs=40636
+[BPE Merge 2950] vocab=3207, top_pair=(b'ut', b'h'), freq=17634, remaining_pairs=40824
+[BPE Merge 3000] vocab=3257, top_pair=(b' w', b'itch'), freq=17102, remaining_pairs=41007
+[BPE Merge 3050] vocab=3307, top_pair=(b'it', b'her'), freq=16678, remaining_pairs=41232
+[BPE Merge 3100] vocab=3357, top_pair=(b' un', b'known'), freq=16238, remaining_pairs=41358
+[BPE Merge 3150] vocab=3407, top_pair=(b' moder', b'n'), freq=15886, remaining_pairs=41533
+[BPE Merge 3200] vocab=3457, top_pair=(b'i', b'o'), freq=15440, remaining_pairs=41736
+[BPE Merge 3250] vocab=3507, top_pair=(b' end', b'ing'), freq=15072, remaining_pairs=41878
+[BPE Merge 3300] vocab=3557, top_pair=(b' pee', b'ked'), freq=14697, remaining_pairs=42018
+[BPE Merge 3350] vocab=3607, top_pair=(b'Y', b'ay'), freq=14372, remaining_pairs=42107
+[BPE Merge 3400] vocab=3657, top_pair=(b' crocod', b'ile'), freq=13971, remaining_pairs=42208
+[BPE Merge 3450] vocab=3707, top_pair=(b' att', b'ract'), freq=13660, remaining_pairs=42391
+[BPE Merge 3500] vocab=3757, top_pair=(b' hunt', b'er'), freq=13310, remaining_pairs=42622
+[BPE Merge 3550] vocab=3807, top_pair=(b' cu', b'be'), freq=12938, remaining_pairs=42745
+[BPE Merge 3600] vocab=3857, top_pair=(b' p', b'un'), freq=12677, remaining_pairs=42948
+[BPE Merge 3650] vocab=3907, top_pair=(b'L', b'ittle'), freq=12393, remaining_pairs=43086
+[BPE Merge 3700] vocab=3957, top_pair=(b' happ', b'ier'), freq=12146, remaining_pairs=43177
+[BPE Merge 3750] vocab=4007, top_pair=(b' mel', b'on'), freq=11825, remaining_pairs=43282
+[BPE Merge 3800] vocab=4057, top_pair=(b' bu', b'zz'), freq=11568, remaining_pairs=43393
+[BPE Merge 3850] vocab=4107, top_pair=(b' roll', b'ing'), freq=11299, remaining_pairs=43498
+[BPE Merge 3900] vocab=4157, top_pair=(b' lean', b'ed'), freq=11026, remaining_pairs=43607
+[BPE Merge 3950] vocab=4207, top_pair=(b' P', b'apa'), freq=10764, remaining_pairs=43700
+[BPE Merge 4000] vocab=4257, top_pair=(b' basket', b'ball'), freq=10580, remaining_pairs=43800
+[BPE Merge 4050] vocab=4307, top_pair=(b'qu', b'it'), freq=10298, remaining_pairs=43894
+[BPE Merge 4100] vocab=4357, top_pair=(b'c', b'cer'), freq=10057, remaining_pairs=44040
+[BPE Merge 4150] vocab=4407, top_pair=(b' li', b'ves'), freq=9827, remaining_pairs=44298
+[BPE Merge 4200] vocab=4457, top_pair=(b' ', b'iron'), freq=9592, remaining_pairs=44428
+[BPE Merge 4250] vocab=4507, top_pair=(b' squ', b'e'), freq=9386, remaining_pairs=44531
+[BPE Merge 4300] vocab=4557, top_pair=(b' c', b'reek'), freq=9215, remaining_pairs=44611
+[BPE Merge 4350] vocab=4607, top_pair=(b' collect', b'ed'), freq=8967, remaining_pairs=44814
+[BPE Merge 4400] vocab=4657, top_pair=(b'r', b'ing'), freq=8728, remaining_pairs=44914
+[BPE Merge 4450] vocab=4707, top_pair=(b' st', b'ro'), freq=8517, remaining_pairs=44986
+[BPE Merge 4500] vocab=4757, top_pair=(b' po', b'ked'), freq=8308, remaining_pairs=45118
+[BPE Merge 4550] vocab=4807, top_pair=(b'ore', b's'), freq=8110, remaining_pairs=45309
+[BPE Merge 4600] vocab=4857, top_pair=(b' p', b'ages'), freq=7907, remaining_pairs=45414
+[BPE Merge 4650] vocab=4907, top_pair=(b' sn', b'apped'), freq=7687, remaining_pairs=45539
+[BPE Merge 4700] vocab=4957, top_pair=(b' perm', b'ission'), freq=7455, remaining_pairs=45602
+[BPE Merge 4750] vocab=5007, top_pair=(b' e', b'qu'), freq=7212, remaining_pairs=45782
+[BPE Merge 4800] vocab=5057, top_pair=(b' m', b'itten'), freq=7022, remaining_pairs=45858
+[BPE Merge 4850] vocab=5107, top_pair=(b'M', b'ark'), freq=6832, remaining_pairs=45897
+[BPE Merge 4900] vocab=5157, top_pair=(b' fa', b'sc'), freq=6643, remaining_pairs=46045
+[BPE Merge 4950] vocab=5207, top_pair=(b'er', b'o'), freq=6409, remaining_pairs=46182
+[BPE Merge 5000] vocab=5257, top_pair=(b' equ', b'ipment'), freq=6238, remaining_pairs=46418
+[BPE Merge 5050] vocab=5307, top_pair=(b' land', b's'), freq=6076, remaining_pairs=46518
+[BPE Merge 5100] vocab=5357, top_pair=(b' happ', b'iest'), freq=5874, remaining_pairs=46599
+[BPE Merge 5150] vocab=5407, top_pair=(b' Ab', b'igail'), freq=5742, remaining_pairs=46706
+[BPE Merge 5200] vocab=5457, top_pair=(b' meas', b'uring'), freq=5561, remaining_pairs=46795
+[BPE Merge 5250] vocab=5507, top_pair=(b' b', b'un'), freq=5372, remaining_pairs=46799
+[BPE Merge 5300] vocab=5557, top_pair=(b' under', b'ground'), freq=5189, remaining_pairs=46905
+[BPE Merge 5350] vocab=5607, top_pair=(b' n', b'icer'), freq=5018, remaining_pairs=47011
+[BPE Merge 5400] vocab=5657, top_pair=(b'loo', b'king'), freq=4894, remaining_pairs=47040
+[BPE Merge 5450] vocab=5707, top_pair=(b' Fl', b'oppy'), freq=4727, remaining_pairs=47196
+[BPE Merge 5500] vocab=5757, top_pair=(b' past', b'el'), freq=4585, remaining_pairs=47265
+[BPE Merge 5550] vocab=5807, top_pair=(b' kick', b'ing'), freq=4465, remaining_pairs=47416
+[BPE Merge 5600] vocab=5857, top_pair=(b'A', b'h'), freq=4341, remaining_pairs=47577
+[BPE Merge 5650] vocab=5907, top_pair=(b' drag', b'ons'), freq=4230, remaining_pairs=47676
+[BPE Merge 5700] vocab=5957, top_pair=(b' rock', b'ed'), freq=4101, remaining_pairs=47746
+[BPE Merge 5750] vocab=6007, top_pair=(b' pl', b'enty'), freq=3929, remaining_pairs=47784
+[BPE Merge 5800] vocab=6057, top_pair=(b'Gra', b'ce'), freq=3790, remaining_pairs=47795
+[BPE Merge 5850] vocab=6107, top_pair=(b' gu', b'est'), freq=3709, remaining_pairs=47915
+[BPE Merge 5900] vocab=6157, top_pair=(b' st', b'are'), freq=3597, remaining_pairs=47935
+[BPE Merge 5950] vocab=6207, top_pair=(b' O', b'ut'), freq=3489, remaining_pairs=48111
+[BPE Merge 6000] vocab=6257, top_pair=(b'as', b'm'), freq=3388, remaining_pairs=48164
+[BPE Merge 6050] vocab=6307, top_pair=(b' K', b'ayla'), freq=3301, remaining_pairs=48185
+[BPE Merge 6100] vocab=6357, top_pair=(b'S', b'andy'), freq=3204, remaining_pairs=48281
+[BPE Merge 6150] vocab=6407, top_pair=(b'R', b'un'), freq=3098, remaining_pairs=48408
+[BPE Merge 6200] vocab=6457, top_pair=(b'k', b'y'), freq=3023, remaining_pairs=48503
+[BPE Merge 6250] vocab=6507, top_pair=(b'P', b'olly'), freq=2928, remaining_pairs=48569
+[BPE Merge 6300] vocab=6557, top_pair=(b' Jul', b'ia'), freq=2843, remaining_pairs=48717
+[BPE Merge 6350] vocab=6607, top_pair=(b' t', b'igers'), freq=2768, remaining_pairs=48815
+[BPE Merge 6400] vocab=6657, top_pair=(b' W', b'ater'), freq=2702, remaining_pairs=48956
+[BPE Merge 6450] vocab=6707, top_pair=(b' will', b'ing'), freq=2630, remaining_pairs=49022
+[BPE Merge 6500] vocab=6757, top_pair=(b' S', b'ophia'), freq=2559, remaining_pairs=49128
+[BPE Merge 6550] vocab=6807, top_pair=(b' poin', b'ty'), freq=2477, remaining_pairs=49277
+[BPE Merge 6600] vocab=6857, top_pair=(b'st', b'y'), freq=2424, remaining_pairs=49402
+[BPE Merge 6650] vocab=6907, top_pair=(b' snow', b'fl'), freq=2354, remaining_pairs=49459
+[BPE Merge 6700] vocab=6957, top_pair=(b' B', b'ee'), freq=2308, remaining_pairs=49613
+[BPE Merge 6750] vocab=7007, top_pair=(b' do', b'd'), freq=2265, remaining_pairs=49674
+[BPE Merge 6800] vocab=7057, top_pair=(b' po', b'ss'), freq=2213, remaining_pairs=49756
+[BPE Merge 6850] vocab=7107, top_pair=(b' Ju', b'dy'), freq=2136, remaining_pairs=49781
+[BPE Merge 6900] vocab=7157, top_pair=(b' pu', b'ff'), freq=2073, remaining_pairs=49796
+[BPE Merge 6950] vocab=7207, top_pair=(b' human', b's'), freq=2016, remaining_pairs=49870
+[BPE Merge 7000] vocab=7257, top_pair=(b' mon', b'ths'), freq=1965, remaining_pairs=49950
+[BPE Merge 7050] vocab=7307, top_pair=(b' pro', b've'), freq=1920, remaining_pairs=49984
+[BPE Merge 7100] vocab=7357, top_pair=(b' yield', b'ed'), freq=1879, remaining_pairs=50097
+[BPE Merge 7150] vocab=7407, top_pair=(b' e', b'ase'), freq=1822, remaining_pairs=50187
+[BPE Merge 7200] vocab=7457, top_pair=(b' nood', b'les'), freq=1782, remaining_pairs=50245
+[BPE Merge 7250] vocab=7507, top_pair=(b' luck', b'ily'), freq=1751, remaining_pairs=50276
+[BPE Merge 7300] vocab=7557, top_pair=(b' wis', b'ely'), freq=1707, remaining_pairs=50319
+[BPE Merge 7350] vocab=7607, top_pair=(b' occ', b'as'), freq=1661, remaining_pairs=50378
+[BPE Merge 7400] vocab=7657, top_pair=(b'm', b's'), freq=1625, remaining_pairs=50418
+[BPE Merge 7450] vocab=7707, top_pair=(b' smell', b'ing'), freq=1588, remaining_pairs=50458
+[BPE Merge 7500] vocab=7757, top_pair=(b' worry', b'ing'), freq=1556, remaining_pairs=50571
+[BPE Merge 7550] vocab=7807, top_pair=(b' d', b'ump'), freq=1522, remaining_pairs=50645
+[BPE Merge 7600] vocab=7857, top_pair=(b' convers', b'ation'), freq=1491, remaining_pairs=50679
+[BPE Merge 7650] vocab=7907, top_pair=(b'u', b'el'), freq=1462, remaining_pairs=50751
+[BPE Merge 7700] vocab=7957, top_pair=(b'R', b'osie'), freq=1431, remaining_pairs=50784
+[BPE Merge 7750] vocab=8007, top_pair=(b' scram', b'bled'), freq=1385, remaining_pairs=50843
+[BPE Merge 7800] vocab=8057, top_pair=(b' decor', b'ation'), freq=1364, remaining_pairs=50918
+[BPE Merge 7850] vocab=8107, top_pair=(b'J', b'e'), freq=1334, remaining_pairs=51020
+[BPE Merge 7900] vocab=8157, top_pair=(b' Mad', b'dy'), freq=1309, remaining_pairs=51148
+[BPE Merge 7950] vocab=8207, top_pair=(b' mill', b'ion'), freq=1279, remaining_pairs=51209
+[BPE Merge 8000] vocab=8257, top_pair=(b' vegg', b'ies'), freq=1250, remaining_pairs=51333
+[BPE Merge 8050] vocab=8307, top_pair=(b'r', b'up'), freq=1222, remaining_pairs=51424
+[BPE Merge 8100] vocab=8357, top_pair=(b' contain', b'er'), freq=1193, remaining_pairs=51463
+[BPE Merge 8150] vocab=8407, top_pair=(b'cent', b'r'), freq=1169, remaining_pairs=51494
+[BPE Merge 8200] vocab=8457, top_pair=(b' ra', b'ising'), freq=1145, remaining_pairs=51573
+[BPE Merge 8250] vocab=8507, top_pair=(b' spr', b'ang'), freq=1117, remaining_pairs=51668
+[BPE Merge 8300] vocab=8557, top_pair=(b' Frank', b'ie'), freq=1100, remaining_pairs=51719
+[BPE Merge 8350] vocab=8607, top_pair=(b' tor', b'to'), freq=1076, remaining_pairs=51830
+[BPE Merge 8400] vocab=8657, top_pair=(b'o', b'ard'), freq=1052, remaining_pairs=51900
+[BPE Merge 8450] vocab=8707, top_pair=(b'asm', b'ine'), freq=1031, remaining_pairs=51953
+[BPE Merge 8500] vocab=8757, top_pair=(b'ight', b'y'), freq=1012, remaining_pairs=52027
+[BPE Merge 8550] vocab=8807, top_pair=(b'b', b'ank'), freq=995, remaining_pairs=52072
+[BPE Merge 8600] vocab=8857, top_pair=(b' St', b'ri'), freq=977, remaining_pairs=52160
+[BPE Merge 8650] vocab=8907, top_pair=(b' smo', b'king'), freq=957, remaining_pairs=52229
+[BPE Merge 8700] vocab=8957, top_pair=(b'ump', b'er'), freq=940, remaining_pairs=52265
+[BPE Merge 8750] vocab=9007, top_pair=(b'k', b'a'), freq=923, remaining_pairs=52302
+[BPE Merge 8800] vocab=9057, top_pair=(b' coo', b'p'), freq=904, remaining_pairs=52313
+[BPE Merge 8850] vocab=9107, top_pair=(b're', b'nt'), freq=889, remaining_pairs=52394
+[BPE Merge 8900] vocab=9157, top_pair=(b' choo', b'sing'), freq=874, remaining_pairs=52428
+[BPE Merge 8950] vocab=9207, top_pair=(b' b', b'as'), freq=856, remaining_pairs=52490
+[BPE Merge 9000] vocab=9257, top_pair=(b' kneel', b'ing'), freq=843, remaining_pairs=52523
+[BPE Merge 9050] vocab=9307, top_pair=(b'c', b'at'), freq=825, remaining_pairs=52597
+[BPE Merge 9100] vocab=9357, top_pair=(b' wh', b'irl'), freq=811, remaining_pairs=52691
+[BPE Merge 9150] vocab=9407, top_pair=(b' must', b'ered'), freq=797, remaining_pairs=52763
+[BPE Merge 9200] vocab=9457, top_pair=(b' loud', b'est'), freq=784, remaining_pairs=52775
+[BPE Merge 9250] vocab=9507, top_pair=(b' Ch', b'uck'), freq=772, remaining_pairs=52826
+[BPE Merge 9300] vocab=9557, top_pair=(b' p', b'urch'), freq=755, remaining_pairs=52845
+[BPE Merge 9350] vocab=9607, top_pair=(b' da', b'ily'), freq=742, remaining_pairs=52906
+[BPE Merge 9400] vocab=9657, top_pair=(b' desk', b's'), freq=730, remaining_pairs=53006
+[BPE Merge 9450] vocab=9707, top_pair=(b'on', b'ut'), freq=717, remaining_pairs=52999
+[BPE Merge 9500] vocab=9757, top_pair=(b'keep', b'ers'), freq=707, remaining_pairs=53051
+[BPE Merge 9550] vocab=9807, top_pair=(b' ag', b'es'), freq=694, remaining_pairs=53074
+[BPE Merge 9600] vocab=9857, top_pair=(b' gr', b'adually'), freq=682, remaining_pairs=53113
+[BPE Merge 9650] vocab=9907, top_pair=(b' s', b'inking'), freq=666, remaining_pairs=53238
+[BPE Merge 9700] vocab=9957, top_pair=(b'al', b'ity'), freq=655, remaining_pairs=53284
+[BPE Merge 9743] vocab=10000, top_pair=(b' tap', b's'), freq=646, remaining_pairs=53297
+[BPE] Merge loop done. Final vocab size: 10000, total merges: 9743
+Training wall‑clock time: 1015.02 seconds
+Memory current: 3.01 MB
+Memory peak (training): 42.33 MB
+
+==== Profiling top cumulative time ====
+         1079192206 function calls (1079191921 primitive calls) in 1014.903 seconds
+
+   Ordered by: cumulative time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    2.561    2.561 1014.902 1014.902 my_bpe_train.py:198(train_bpe)
+        1    0.000    0.000  542.636  542.636 pool.py:738(__exit__)
+        1    0.000    0.000  542.607  542.607 pool.py:654(terminate)
+        5    0.000    0.000  542.599  108.520 util.py:208(__call__)
+        1    0.000    0.000  542.599  542.599 pool.py:680(_terminate_pool)
+        1    0.000    0.000  542.550  542.550 pool.py:671(_help_stuff_finish)
+        1    0.000    0.000  542.550  542.550 {method 'acquire' of '_multiprocessing.SemLock' objects}
+      3/1    0.000    0.000  542.550  542.550 threading.py:1016(_bootstrap)
+      3/1    0.000    0.000  542.550  542.550 threading.py:1056(_bootstrap_inner)
+      158    0.000    0.000  542.550    3.434 pool.py:333(_maintain_pool)
+      3/1    0.000    0.000  542.550  542.550 threading.py:999(run)
+        1    0.000    0.000  542.550  542.550 pool.py:527(_handle_tasks)
+        8    0.000    0.000  542.549   67.819 connection.py:202(send)
+      158    0.001    0.000  542.549    3.434 pool.py:289(_join_exited_workers)
+       13    0.000    0.000  542.549   41.735 connection.py:406(_send_bytes)
+       13    0.000    0.000  542.549   41.735 connection.py:381(_send)
+       13    0.000    0.000  542.549   41.735 {built-in method posix.write}
+        1    0.000    0.000  542.548  542.548 pool.py:573(_handle_results)
+      636    0.002    0.000  542.548    0.853 process.py:224(exitcode)
+      158    0.000    0.000  542.404    3.433 pool.py:500(_wait_for_updates)
+      319    0.003    0.000  542.402    1.700 connection.py:1122(wait)
+      319    0.002    0.000  542.388    1.700 selectors.py:402(select)
+      319  542.385    1.700  542.385    1.700 {method 'poll' of 'select.poll' objects}
+     9782  180.485    0.018  241.916    0.025 {built-in method builtins.max}
+     9743  190.546    0.020  226.416    0.023 my_bpe_train.py:140(merge_and_update)
+413173185   61.432    0.000   61.432    0.000 my_bpe_train.py:267(<lambda>)
+665808580/665808540   35.996    0.000   35.996    0.000 {built-in method builtins.len}
+        1    0.997    0.997    1.002    1.002 my_bpe_train.py:122(build_initial_pair_counts)
+      648    0.001    0.000    0.145    0.000 popen_fork.py:24(poll)
+      648    0.052    0.000    0.143    0.000 {built-in method posix.waitpid}
+        5    0.093    0.019    0.140    0.028 __init__.py:669(update)
+        7    0.129    0.018    0.129    0.018 {built-in method _pickle.loads}
+    19498    0.064    0.000    0.064    0.000 {method 'items' of 'dict' objects}
+        2    0.000    0.000    0.048    0.024 process.py:142(join)
+        2    0.000    0.000    0.048    0.024 popen_fork.py:36(wait)
+   131459    0.046    0.000    0.046    0.000 {method 'get' of 'dict' objects}
+        5    0.000    0.000    0.039    0.008 connection.py:246(recv)
+    10510    0.036    0.000    0.036    0.000 {method 'append' of 'list' objects}
+     26/4    0.000    0.000    0.032    0.008 <frozen importlib._bootstrap>:1349(_find_and_load)
+     26/4    0.000    0.000    0.032    0.008 <frozen importlib._bootstrap>:1304(_find_and_load_unlocked)
+     24/4    0.000    0.000    0.031    0.008 <frozen importlib._bootstrap>:911(_load_unlocked)
+     15/4    0.000    0.000    0.031    0.008 <frozen importlib._bootstrap_external>:989(exec_module)
+     53/8    0.000    0.000    0.029    0.004 <frozen importlib._bootstrap>:480(_call_with_frames_removed)
+     15/4    0.000    0.000    0.029    0.007 {built-in method builtins.exec}
+        1    0.000    0.000    0.029    0.029 pool.py:1(<module>)
+        1    0.000    0.000    0.013    0.013 traceback.py:1(<module>)
+      202    0.012    0.000    0.012    0.000 {built-in method builtins.print}
+    60/59    0.002    0.000    0.011    0.000 {built-in method builtins.__build_class__}
+        1    0.000    0.000    0.011    0.011 textwrap.py:1(<module>)
+        5    0.000    0.000    0.011    0.002 __init__.py:226(compile)
+        5    0.000    0.000    0.011    0.002 __init__.py:280(_compile)
+        5    0.000    0.000    0.010    0.002 _compiler.py:740(compile)
+     1109    0.003    0.000    0.009    0.000 selectors.py:351(register)
+        1    0.000    0.000    0.008    0.008 textwrap.py:17(TextWrapper)
+      160    0.000    0.000    0.008    0.000 queues.py:374(empty)
+      161    0.000    0.000    0.008    0.000 connection.py:253(poll)
+      161    0.000    0.000    0.008    0.000 connection.py:439(_poll)
+       15    0.000    0.000    0.008    0.001 <frozen importlib._bootstrap_external>:1062(get_code)
+       15    0.000    0.000    0.006    0.000 <frozen importlib._bootstrap_external>:751(_compile_bytecode)
+    12/11    0.000    0.000    0.006    0.001 <frozen importlib._bootstrap>:1390(_handle_fromlist)
+        1    0.000    0.000    0.006    0.006 {built-in method builtins.__import__}
+       15    0.006    0.000    0.006    0.000 {built-in method marshal.loads}
+        5    0.000    0.000    0.006    0.001 _parser.py:969(parse)
+     19/5    0.000    0.000    0.006    0.001 _parser.py:452(_parse_sub)
+     25/5    0.003    0.000    0.005    0.001 _parser.py:512(_parse)
+     1109    0.002    0.000    0.005    0.000 selectors.py:234(register)
+        1    0.000    0.000    0.005    0.005 connection.py:1(<module>)
+        1    0.000    0.000    0.005    0.005 util.py:1(<module>)
+        1    0.000    0.000    0.005    0.005 pool.py:305(_repopulate_pool)
+        1    0.000    0.000    0.005    0.005 pool.py:314(_repopulate_pool_static)
+        5    0.000    0.000    0.005    0.001 _compiler.py:573(_code)
+       26    0.000    0.000    0.004    0.000 <frozen importlib._bootstrap>:1240(_find_spec)
+        1    0.000    0.000    0.004    0.004 pool.py:362(map)
+        1    0.000    0.000    0.004    0.004 pool.py:767(get)
+     36/5    0.001    0.000    0.004    0.001 _compiler.py:37(_compile)
+        4    0.000    0.000    0.004    0.001 process.py:110(start)
+        5    0.000    0.000    0.004    0.001 queues.py:391(put)
+        4    0.000    0.000    0.003    0.001 context.py:279(_Popen)
+        4    0.000    0.000    0.003    0.001 pool.py:809(_set)
+        7    0.003    0.000    0.003    0.000 synchronize.py:94(__enter__)
+        1    0.000    0.000    0.003    0.003 pool.py:161(__delitem__)
+       19    0.000    0.000    0.003    0.000 <frozen importlib._bootstrap_external>:1520(find_spec)
+       19    0.000    0.000    0.003    0.000 <frozen importlib._bootstrap_external>:1491(_get_spec)
+       38    0.001    0.000    0.003    0.000 <frozen importlib._bootstrap_external>:1593(find_spec)
+        1    0.000    0.000    0.003    0.003 tempfile.py:1(<module>)
+        4    0.000    0.000    0.003    0.001 popen_fork.py:15(__init__)
+        4    0.000    0.000    0.003    0.001 popen_fork.py:62(_launch)
+        3    0.000    0.000    0.003    0.001 context.py:110(SimpleQueue)
+        1    0.000    0.000    0.002    0.002 pool.py:345(_setup_queues)
+        4    0.002    0.000    0.002    0.000 {built-in method posix.fork}
+        1    0.000    0.000    0.002    0.002 queue.py:1(<module>)
+        3    0.000    0.000    0.002    0.001 queues.py:361(__init__)
+        6    0.000    0.000    0.002    0.000 context.py:65(Lock)
+       46    0.002    0.000    0.002    0.000 {method 'write' of '_io.BytesIO' objects}
+        1    0.000    0.000    0.002    0.002 random.py:1(<module>)
+      319    0.001    0.000    0.002    0.000 selectors.py:347(__init__)
+       20    0.001    0.000    0.001    0.000 _compiler.py:243(_optimize_charset)
+     1109    0.000    0.000    0.001    0.000 selectors.py:215(_fileobj_lookup)
+     1109    0.001    0.000    0.001    0.000 <string>:1(<lambda>)
+       24    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:806(module_from_spec)
+        1    0.000    0.000    0.001    0.001 subprocess.py:1(<module>)
+       15    0.001    0.000    0.001    0.000 {method 'update' of 'dict' objects}
+      7/5    0.000    0.000    0.001    0.000 connection.py:429(_recv_bytes)
+    14/10    0.000    0.000    0.001    0.000 connection.py:390(_recv)
+       26    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:416(__enter__)
+      158    0.001    0.000    0.001    0.000 pool.py:284(_get_worker_sentinels)
+      319    0.000    0.000    0.001    0.000 selectors.py:202(__exit__)
+     1109    0.001    0.000    0.001    0.000 selectors.py:21(_fileobj_to_fd)
+     1144    0.001    0.000    0.001    0.000 {built-in method __new__ of type object at 0xa44b40}
+      319    0.000    0.000    0.001    0.000 selectors.py:268(close)
+      197    0.001    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:126(_path_join)
+       24    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:733(_init_module_attrs)
+     1109    0.001    0.000    0.001    0.000 {method 'register' of 'select.poll' objects}
+       30    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:482(cache_from_source)
+        1    0.000    0.000    0.001    0.001 __init__.py:355(namedtuple)
+       15    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:1183(get_data)
+       70    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:140(_path_stat)
+       26    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:304(acquire)
+       70    0.001    0.000    0.001    0.000 {built-in method posix.stat}
+    46/42    0.001    0.000    0.001    0.000 {built-in method posix.read}
+        4    0.000    0.000    0.001    0.000 threading.py:637(wait)
+        3    0.000    0.000    0.001    0.000 threading.py:973(start)
+       13    0.000    0.000    0.001    0.000 reduction.py:48(dumps)
+       32    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:632(cached)
+       17    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap_external>:611(_get_cached)
+        4    0.000    0.000    0.001    0.000 pool.py:179(Process)
+      319    0.001    0.000    0.001    0.000 selectors.py:209(__init__)
+      727    0.000    0.000    0.001    0.000 {built-in method builtins.hasattr}
+        1    0.000    0.000    0.001    0.001 pool.py:506(_handle_workers)
+    31/12    0.000    0.000    0.001    0.000 _parser.py:178(getwidth)
+        6    0.000    0.000    0.000    0.000 synchronize.py:168(__init__)
+        6    0.000    0.000    0.000    0.000 synchronize.py:50(__init__)
+     1490    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+      319    0.000    0.000    0.000    0.000 {method 'clear' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.eval}
+        4    0.000    0.000    0.000    0.000 process.py:80(__init__)
+        1    0.000    0.000    0.000    0.000 heapq.py:1(<module>)
+       43    0.000    0.000    0.000    0.000 _parser.py:312(_class_escape)
+     1264    0.000    0.000    0.000    0.000 process.py:247(sentinel)
+       18    0.000    0.000    0.000    0.000 {method 'read' of '_io.BufferedReader' objects}
+        5    0.000    0.000    0.000    0.000 _compiler.py:511(_compile_info)
+        7    0.000    0.000    0.000    0.000 {method '__enter__' of '_multiprocessing.SemLock' objects}
+        1    0.000    0.000    0.000    0.000 weakref.py:1(<module>)
+       26    0.000    0.000    0.000    0.000 __init__.py:101(find_spec)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:162(__enter__)
+        2    0.000    0.000    0.000    0.000 queues.py:385(get)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:426(_get_module_lock)
+        3    0.000    0.000    0.000    0.000 threading.py:882(__init__)
+       15    0.000    0.000    0.000    0.000 {built-in method _io.open_code}
+       13    0.000    0.000    0.000    0.000 reduction.py:38(__init__)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:420(__exit__)
+      239    0.000    0.000    0.000    0.000 {method 'join' of 'str' objects}
+        3    0.000    0.000    0.000    0.000 _parser.py:98(closegroup)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:372(release)
+      455    0.000    0.000    0.000    0.000 _parser.py:261(get)
+      320    0.000    0.000    0.000    0.000 {built-in method time.monotonic}
+        4    0.000    0.000    0.000    0.000 threading.py:323(wait)
+        1    0.000    0.000    0.000    0.000 synchronize.py:1(<module>)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:124(setdefault)
+      477    0.000    0.000    0.000    0.000 connection.py:169(fileno)
+       17    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1588(_get_spec)
+       68    0.000    0.000    0.000    0.000 {method 'find' of 'bytearray' objects}
+        3    0.000    0.000    0.000    0.000 {built-in method _thread.start_new_thread}
+      319    0.000    0.000    0.000    0.000 {built-in method select.poll}
+       64    0.000    0.000    0.000    0.000 {built-in method builtins.min}
+        5    0.000    0.000    0.000    0.000 util.py:189(__init__)
+      505    0.000    0.000    0.000    0.000 _parser.py:240(__next)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:997(exec_module)
+       30    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:132(_path_split)
+        1    0.000    0.000    0.000    0.000 tempfile.py:999(TemporaryDirectory)
+        4    0.000    0.000    0.000    0.000 threading.py:616(set)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1287(create_module)
+        1    0.000    0.000    0.000    0.000 context.py:115(Pool)
+      424    0.000    0.000    0.000    0.000 {method 'rstrip' of 'str' objects}
+       17    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:159(_path_isfile)
+        2    0.000    0.000    0.000    0.000 {built-in method _imp.create_dynamic}
+     1916    0.000    0.000    0.000    0.000 process.py:99(_check_closed)
+      152    0.000    0.000    0.000    0.000 {method 'rpartition' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 pool.py:471(_map_async)
+        1    0.000    0.000    0.000    0.000 bisect.py:1(<module>)
+       15    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1202(path_stats)
+       17    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:802(spec_from_file_location)
+        5    0.000    0.000    0.000    0.000 connection.py:182(send_bytes)
+       20    0.000    0.000    0.000    0.000 _compiler.py:216(_compile_charset)
+      190    0.000    0.000    0.000    0.000 _parser.py:168(__getitem__)
+    26/19    0.000    0.000    0.000    0.000 {method 'acquire' of '_thread.lock' objects}
+       17    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:150(_path_is_mode_type)
+        6    0.000    0.000    0.000    0.000 synchronize.py:121(_make_name)
+       22    0.000    0.000    0.000    0.000 {built-in method builtins.next}
+        1    0.000    0.000    0.000    0.000 pool.py:183(__init__)
+        3    0.000    0.000    0.000    0.000 <frozen abc>:105(__new__)
+        4    0.000    0.000    0.000    0.000 threading.py:424(notify_all)
+        6    0.000    0.000    0.000    0.000 tempfile.py:292(__next__)
+       52    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:645(parent)
+        1    0.000    0.000    0.000    0.000 queues.py:1(<module>)
+        4    0.000    0.000    0.000    0.000 util.py:466(close_fds)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:989(create_module)
+        4    0.000    0.000    0.000    0.000 process.py:128(terminate)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:982(find_spec)
+        1    0.000    0.000    0.000    0.000 my_bpe_train.py:26(find_chunk_boundaries)
+        4    0.000    0.000    0.000    0.000 popen_fork.py:56(terminate)
+       13    0.000    0.000    0.000    0.000 {method 'dump' of '_pickle.Pickler' objects}
+        7    0.000    0.000    0.000    0.000 {built-in method _imp.exec_builtin}
+      658    0.000    0.000    0.000    0.000 connection.py:135(_check_closed)
+        4    0.000    0.000    0.000    0.000 <frozen abc>:117(__instancecheck__)
+        4    0.000    0.000    0.000    0.000 threading.py:394(notify)
+       15    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:666(_classify_pyc)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        7    0.000    0.000    0.000    0.000 {built-in method _imp.create_builtin}
+        1    0.000    0.000    0.000    0.000 pool.py:764(wait)
+      165    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
+        4    0.000    0.000    0.000    0.000 popen_fork.py:46(_send_signal)
+        3    0.000    0.000    0.000    0.000 _compiler.py:386(_mk_bitmap)
+        4    0.000    0.000    0.000    0.000 threading.py:588(__init__)
+       10    0.000    0.000    0.000    0.000 enum.py:1562(__and__)
+        4    0.000    0.000    0.000    0.000 {built-in method _abc._abc_instancecheck}
+        4    0.000    0.000    0.000    0.000 util.py:436(_flush_std_streams)
+        4    0.000    0.000    0.000    0.000 {built-in method posix.kill}
+       15    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:699(_validate_timestamp_pyc)
+       30    0.000    0.000    0.000    0.000 {built-in method posix.getpid}
+        2    0.000    0.000    0.000    0.000 connection.py:208(recv_bytes)
+        4    0.000    0.000    0.000    0.000 process.py:153(is_alive)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:232(__init__)
+       11    0.000    0.000    0.000    0.000 {built-in method posix.pipe}
+        2    0.000    0.000    0.000    0.000 threading.py:1220(is_alive)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:662(spec_from_loader)
+        1    0.000    0.000    0.000    0.000 subprocess.py:749(Popen)
+       17    0.000    0.000    0.000    0.000 {method 'copy' of 'dict' objects}
+       60    0.000    0.000    0.000    0.000 {built-in method builtins.ord}
+        7    0.000    0.000    0.000    0.000 _weakrefset.py:39(_remove)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1295(exec_module)
+        1    0.000    0.000    0.000    0.000 pool.py:173(Pool)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:74(__new__)
+       22    0.000    0.000    0.000    0.000 {built-in method posix.close}
+       45    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:84(_unpack_uint32)
+       17    0.000    0.000    0.000    0.000 _parser.py:449(_uniq)
+        1    0.000    0.000    0.000    0.000 pool.py:796(__init__)
+        2    0.000    0.000    0.000    0.000 random.py:126(__init__)
+        3    0.000    0.000    0.000    0.000 connection.py:533(Pipe)
+        2    0.000    0.000    0.000    0.000 {built-in method _imp.exec_dynamic}
+       49    0.000    0.000    0.000    0.000 _parser.py:176(append)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:445(cb)
+      8/5    0.000    0.000    0.000    0.000 _compiler.py:436(_get_literal_prefix)
+      158    0.000    0.000    0.000    0.000 _parser.py:256(match)
+        2    0.000    0.000    0.000    0.000 random.py:135(seed)
+        4    0.000    0.000    0.000    0.000 process.py:61(_cleanup)
+        5    0.000    0.000    0.000    0.000 pool.py:385(_guarded_task_generation)
+       11    0.000    0.000    0.000    0.000 {method 'release' of '_thread.lock' objects}
+        6    0.000    0.000    0.000    0.000 random.py:454(choices)
+        1    0.000    0.000    0.000    0.000 weakref.py:540(finalize)
+       60    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:134(<genexpr>)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:173(__exit__)
+       20    0.000    0.000    0.000    0.000 {method 'format' of 'str' objects}
+        6    0.000    0.000    0.000    0.000 util.py:174(register_after_fork)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:79(__init__)
+       18    0.000    0.000    0.000    0.000 {method 'getbuffer' of '_io.BytesIO' objects}
+        6    0.000    0.000    0.000    0.000 tempfile.py:281(rng)
+      160    0.000    0.000    0.000    0.000 selectors.py:275(_key_from_fd)
+       20    0.000    0.000    0.000    0.000 {built-in method builtins.locals}
+        6    0.000    0.000    0.000    0.000 connection.py:131(__del__)
+       16    0.000    0.000    0.000    0.000 {method '__exit__' of '_io._IOBase' objects}
+        3    0.000    0.000    0.000    0.000 {built-in method _abc._abc_init}
+       61    0.000    0.000    0.000    0.000 {method '__exit__' of '_thread.RLock' objects}
+       35    0.000    0.000    0.000    0.000 {built-in method _thread.allocate_lock}
+        1    0.000    0.000    0.000    0.000 tempfile.py:824(SpooledTemporaryFile)
+      3/2    0.000    0.000    0.000    0.000 <frozen abc>:121(__subclasscheck__)
+        5    0.000    0.000    0.000    0.000 pool.py:633(_get_tasks)
+       70    0.000    0.000    0.000    0.000 {built-in method _thread.get_ident}
+        1    0.000    0.000    0.000    0.000 pool.py:747(__init__)
+        1    0.000    0.000    0.000    0.000 popen_fork.py:1(<module>)
+        5    0.000    0.000    0.000    0.000 threading.py:1153(_wait_for_tstate_lock)
+      225    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:491(_verbose_message)
+       29    0.000    0.000    0.000    0.000 {method 'pop' of 'dict' objects}
+       19    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1128(find_spec)
+      319    0.000    0.000    0.000    0.000 selectors.py:63(__init__)
+        2    0.000    0.000    0.000    0.000 {method 'put' of '_queue.SimpleQueue' objects}
+      3/2    0.000    0.000    0.000    0.000 {built-in method _abc._abc_subclasscheck}
+        8    0.000    0.000    0.000    0.000 {method 'flush' of '_io.TextIOWrapper' objects}
+        1    0.000    0.000    0.000    0.000 weakref.py:104(__init__)
+        4    0.000    0.000    0.000    0.000 {built-in method posix.waitstatus_to_exitcode}
+        7    0.000    0.000    0.000    0.000 {method 'extend' of 'list' objects}
+        4    0.000    0.000    0.000    0.000 threading.py:277(__init__)
+        6    0.000    0.000    0.000    0.000 weakref.py:105(remove)
+       17    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:185(_path_abspath)
+        7    0.000    0.000    0.000    0.000 {method 'insert' of 'list' objects}
+       30    0.000    0.000    0.000    0.000 enum.py:1544(_get_value)
+        6    0.000    0.000    0.000    0.000 weakref.py:164(__setitem__)
+       18    0.000    0.000    0.000    0.000 {built-in method fromkeys}
+        1    0.000    0.000    0.000    0.000 queues.py:35(Queue)
+       15    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:643(_check_name_wrapper)
+        8    0.000    0.000    0.000    0.000 threading.py:299(__enter__)
+        1    0.000    0.000    0.000    0.000 random.py:110(Random)
+       13    0.000    0.000    0.000    0.000 _parser.py:172(__setitem__)
+       90    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1222(__enter__)
+       60    0.000    0.000    0.000    0.000 _parser.py:293(tell)
+        1    0.000    0.000    0.000    0.000 subprocess.py:695(_use_posix_spawn)
+        1    0.000    0.000    0.000    0.000 weakref.py:289(update)
+       90    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1226(__exit__)
+        1    0.000    0.000    0.000    0.000 contextlib.py:272(contextmanager)
+       17    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:180(_path_isabs)
+      319    0.000    0.000    0.000    0.000 selectors.py:199(__enter__)
+        3    0.000    0.000    0.000    0.000 threading.py:1043(_set_tstate_lock)
+       32    0.000    0.000    0.000    0.000 {method 'pop' of 'list' objects}
+       13    0.000    0.000    0.000    0.000 {built-in method _struct.pack}
+        7    0.000    0.000    0.000    0.000 _weakrefset.py:85(add)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:82(remove)
+       27    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
+       15    0.000    0.000    0.000    0.000 {method 'add' of 'set' objects}
+      168    0.000    0.000    0.000    0.000 connection.py:139(_check_readable)
+        8    0.000    0.000    0.000    0.000 threading.py:314(_is_owned)
+       30    0.000    0.000    0.000    0.000 {method 'rfind' of 'str' objects}
+       45    0.000    0.000    0.000    0.000 {built-in method from_bytes}
+        2    0.000    0.000    0.000    0.000 {function Random.seed at 0x7ab27d77b240}
+       29    0.000    0.000    0.000    0.000 util.py:48(debug)
+       72    0.000    0.000    0.000    0.000 _parser.py:164(__len__)
+      142    0.000    0.000    0.000    0.000 {built-in method _imp.acquire_lock}
+        1    0.000    0.000    0.000    0.000 <frozen abc>:110(register)
+        1    0.000    0.000    0.000    0.000 queue.py:28(Queue)
+       47    0.000    0.000    0.000    0.000 {built-in method posix.fspath}
+       15    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:48(_new_module)
+        3    0.000    0.000    0.000    0.000 threading.py:1106(_delete)
+        1    0.000    0.000    0.000    0.000 weakref.py:92(WeakValueDictionary)
+        5    0.000    0.000    0.000    0.000 _compiler.py:467(_get_charset_prefix)
+        1    0.000    0.000    0.000    0.000 __init__.py:595(__init__)
+       12    0.000    0.000    0.000    0.000 threading.py:1483(current_thread)
+        1    0.000    0.000    0.000    0.000 traceback.py:374(StackSummary)
+       32    0.000    0.000    0.000    0.000 {built-in method _weakref._remove_dead_weakref}
+        3    0.000    0.000    0.000    0.000 threading.py:1354(_make_invoke_excepthook)
+        1    0.000    0.000    0.000    0.000 traceback.py:248(FrameSummary)
+        1    0.000    0.000    0.000    0.000 functools.py:35(update_wrapper)
+       10    0.000    0.000    0.000    0.000 _compiler.py:398(_simple)
+        6    0.000    0.000    0.000    0.000 connection.py:376(_close)
+        5    0.000    0.000    0.000    0.000 {built-in method _sre.compile}
+        3    0.000    0.000    0.000    0.000 threading.py:837(_newname)
+        3    0.000    0.000    0.000    0.000 _parser.py:86(opengroup)
+       10    0.000    0.000    0.000    0.000 enum.py:726(__call__)
+      142    0.000    0.000    0.000    0.000 {built-in method _imp.release_lock}
+       39    0.000    0.000    0.000    0.000 _parser.py:113(__init__)
+       19    0.000    0.000    0.000    0.000 {method 'endswith' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 {built-in method _abc._abc_register}
+        1    0.000    0.000    0.000    0.000 connection.py:115(_ConnectionBase)
+       26    0.000    0.000    0.000    0.000 {built-in method _imp.is_builtin}
+       26    0.000    0.000    0.000    0.000 {method 'remove' of 'list' objects}
+        7    0.000    0.000    0.000    0.000 {built-in method _struct.unpack}
+        3    0.000    0.000    0.000    0.000 threading.py:1079(_stop)
+        8    0.000    0.000    0.000    0.000 threading.py:302(__exit__)
+        1    0.000    0.000    0.000    0.000 weakref.py:356(WeakKeyDictionary)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:599(__init__)
+       51    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1469(_path_importer_cache)
+        3    0.000    0.000    0.000    0.000 threading.py:1115(join)
+        3    0.000    0.000    0.000    0.000 threading.py:1249(daemon)
+        1    0.000    0.000    0.000    0.000 {built-in method _io.open}
+        7    0.000    0.000    0.000    0.000 synchronize.py:97(__exit__)
+        7    0.000    0.000    0.000    0.000 {method 'seek' of '_io.BufferedReader' objects}
+        1    0.000    0.000    0.000    0.000 subprocess.py:470(CompletedProcess)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:501(_requires_builtin_wrapper)
+        1    0.000    0.000    0.000    0.000 pool.py:279(_get_sentinels)
+        1    0.000    0.000    0.000    0.000 traceback.py:679(TracebackException)
+        8    0.000    0.000    0.000    0.000 process.py:94(<genexpr>)
+        4    0.000    0.000    0.000    0.000 threading.py:311(_acquire_restore)
+       48    0.000    0.000    0.000    0.000 {method 'random' of '_random.Random' objects}
+        1    0.000    0.000    0.000    0.000 synchronize.py:46(SemLock)
+        1    0.000    0.000    0.000    0.000 synchronize.py:370(Barrier)
+        6    0.000    0.000    0.000    0.000 weakref.py:347(__new__)
+        3    0.000    0.000    0.000    0.000 {built-in method _thread._set_sentinel}
+       11    0.000    0.000    0.000    0.000 {method 'discard' of 'set' objects}
+        1    0.000    0.000    0.000    0.000 {built-in method math.exp}
+        5    0.000    0.000    0.000    0.000 _parser.py:231(__init__)
+        1    0.000    0.000    0.000    0.000 queues.py:359(SimpleQueue)
+        1    0.000    0.000    0.000    0.000 pool.py:745(ApplyResult)
+       12    0.000    0.000    0.000    0.000 {built-in method builtins.setattr}
+       19    0.000    0.000    0.000    0.000 {built-in method _imp.find_frozen}
+        9    0.000    0.000    0.000    0.000 {method 'getvalue' of '_io.BytesIO' objects}
+        1    0.000    0.000    0.000    0.000 queue.py:258(_PySimpleQueue)
+        1    0.000    0.000    0.000    0.000 popen_fork.py:12(Popen)
+        6    0.000    0.000    0.000    0.000 weakref.py:352(__init__)
+        8    0.000    0.000    0.000    0.000 {method '__enter__' of '_thread.lock' objects}
+        4    0.000    0.000    0.000    0.000 threading.py:308(_release_save)
+        1    0.000    0.000    0.000    0.000 pool.py:921(ThreadPool)
+        5    0.000    0.000    0.000    0.000 {built-in method sys.intern}
+        5    0.000    0.000    0.000    0.000 _parser.py:77(__init__)
+       20    0.000    0.000    0.000    0.000 _parser.py:83(groups)
+        1    0.000    0.000    0.000    0.000 subprocess.py:126(CalledProcessError)
+        4    0.000    0.000    0.000    0.000 {method 'replace' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 pool.py:734(__enter__)
+       10    0.000    0.000    0.000    0.000 _compiler.py:570(isstring)
+        6    0.000    0.000    0.000    0.000 connection.py:118(__init__)
+        1    0.000    0.000    0.000    0.000 connection.py:364(Connection)
+        2    0.000    0.000    0.000    0.000 {built-in method time.perf_counter}
+        3    0.000    0.000    0.000    0.000 threading.py:1040(_set_native_id)
+        1    0.000    0.000    0.000    0.000 __init__.py:255(escape)
+        3    0.000    0.000    0.000    0.000 threading.py:1036(_set_ident)
+        6    0.000    0.000    0.000    0.000 {method 'setter' of 'property' objects}
+        6    0.000    0.000    0.000    0.000 synchronize.py:90(_make_methods)
+        5    0.000    0.000    0.000    0.000 {method 'isidentifier' of 'str' objects}
+        4    0.000    0.000    0.000    0.000 _parser.py:372(_escape)
+        3    0.000    0.000    0.000    0.000 {method 'find' of 'bytes' objects}
+        1    0.000    0.000    0.000    0.000 synchronize.py:217(Condition)
+       10    0.000    0.000    0.000    0.000 enum.py:1129(__new__)
+        1    0.000    0.000    0.000    0.000 connection.py:448(Listener)
+        1    0.000    0.000    0.000    0.000 {method 'encode' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 {method 'split' of 'str' objects}
+        3    0.000    0.000    0.000    0.000 {method 'translate' of 'bytearray' objects}
+        1    0.000    0.000    0.000    0.000 subprocess.py:163(TimeoutExpired)
+        1    0.000    0.000    0.000    0.000 util.py:185(Finalize)
+        1    0.000    0.000    0.000    0.000 weakref.py:38(WeakMethod)
+        3    0.000    0.000    0.000    0.000 <frozen _collections_abc>:435(__subclasshook__)
+        1    0.000    0.000    0.000    0.000 tempfile.py:271(_RandomNameSequence)
+        1    0.000    0.000    0.000    0.000 random.py:222(__init_subclass__)
+       48    0.000    0.000    0.000    0.000 {built-in method math.floor}
+        4    0.000    0.000    0.000    0.000 process.py:193(name)
+        1    0.000    0.000    0.000    0.000 pool.py:756(ready)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:412(__init__)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.sorted}
+        1    0.000    0.000    0.000    0.000 pool.py:157(__init__)
+        5    0.000    0.000    0.000    0.000 _parser.py:953(fix_flags)
+        1    0.000    0.000    0.000    0.000 pool.py:837(IMapIterator)
+        1    0.000    0.000    0.000    0.000 tempfile.py:614(_TemporaryFileWrapper)
+       15    0.000    0.000    0.000    0.000 {built-in method _imp._fix_co_filename}
+        3    0.000    0.000    0.000    0.000 enum.py:202(__get__)
+        5    0.000    0.000    0.000    0.000 {method '__contains__' of 'frozenset' objects}
+        1    0.000    0.000    0.000    0.000 {built-in method posix.sysconf}
+       38    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:71(_relax_case)
+        4    0.000    0.000    0.000    0.000 {method 'remove' of 'collections.deque' objects}
+        1    0.000    0.000    0.000    0.000 tempfile.py:571(_TemporaryFileCloser)
+        1    0.000    0.000    0.000    0.000 connection.py:596(SocketListener)
+        9    0.000    0.000    0.000    0.000 threading.py:1234(daemon)
+        1    0.000    0.000    0.000    0.000 queues.py:316(JoinableQueue)
+        1    0.000    0.000    0.000    0.000 synchronize.py:328(Event)
+       26    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:158(__init__)
+        1    0.000    0.000    0.000    0.000 random.py:876(SystemRandom)
+        5    0.000    0.000    0.000    0.000 util.py:44(sub_debug)
+        1    0.000    0.000    0.000    0.000 functools.py:65(wraps)
+        9    0.000    0.000    0.000    0.000 _compiler.py:31(_combine_flags)
+        1    0.000    0.000    0.000    0.000 pool.py:80(MaybeEncodingError)
+        1    0.000    0.000    0.000    0.000 {method 'translate' of 'str' objects}
+        5    0.000    0.000    0.000    0.000 __init__.py:429(<genexpr>)
+        6    0.000    0.000    0.000    0.000 {built-in method builtins.id}
+        1    0.000    0.000    0.000    0.000 pool.py:150(_PoolCache)
+        1    0.000    0.000    0.000    0.000 util.py:371(ForkAwareThreadLock)
+        2    0.000    0.000    0.000    0.000 process.py:234(ident)
+        6    0.000    0.000    0.000    0.000 connection.py:838(<genexpr>)
+        1    0.000    0.000    0.000    0.000 synchronize.py:191(RLock)
+        1    0.000    0.000    0.000    0.000 pool.py:266(__del__)
+        1    0.000    0.000    0.000    0.000 traceback.py:656(_ExceptionPrintContext)
+        1    0.000    0.000    0.000    0.000 queue.py:223(PriorityQueue)
+       24    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:653(has_location)
+        3    0.000    0.000    0.000    0.000 {built-in method _thread.get_native_id}
+        8    0.000    0.000    0.000    0.000 process.py:189(name)
+       13    0.000    0.000    0.000    0.000 connection.py:143(_check_writable)
+        1    0.000    0.000    0.000    0.000 weakref.py:335(KeyedRef)
+        1    0.000    0.000    0.000    0.000 {built-in method sys._getframemodulename}
+        4    0.000    0.000    0.000    0.000 {method 'append' of 'collections.deque' objects}
+       15    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1153(__init__)
+        1    0.000    0.000    0.000    0.000 queue.py:242(LifoQueue)
+        2    0.000    0.000    0.000    0.000 {built-in method math.log}
+        8    0.000    0.000    0.000    0.000 {method '__exit__' of '_thread.lock' objects}
+       12    0.000    0.000    0.000    0.000 threading.py:601(is_set)
+       20    0.000    0.000    0.000    0.000 __init__.py:108(<lambda>)
+        1    0.000    0.000    0.000    0.000 pool.py:57(RemoteTraceback)
+        1    0.000    0.000    0.000    0.000 {built-in method posix.register_at_fork}
+        7    0.000    0.000    0.000    0.000 {method '__exit__' of '_multiprocessing.SemLock' objects}
+       13    0.000    0.000    0.000    0.000 _compiler.py:428(_get_iscased)
+        1    0.000    0.000    0.000    0.000 util.py:388(ForkAwareLocal)
+        1    0.000    0.000    0.000    0.000 {built-in method posix.confstr}
+       15    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1178(get_filename)
+        4    0.000    0.000    0.000    0.000 process.py:205(daemon)
+        1    0.000    0.000    0.000    0.000 traceback.py:90(_Sentinel)
+        1    0.000    0.000    0.000    0.000 synchronize.py:130(Semaphore)
+        1    0.000    0.000    0.000    0.000 reduction.py:43(register)
+        1    0.000    0.000    0.000    0.000 connection.py:970(ConnectionWrapper)
+        1    0.000    0.000    0.000    0.000 {built-in method atexit.register}
+        6    0.000    0.000    0.000    0.000 context.py:197(get_start_method)
+        1    0.000    0.000    0.000    0.000 {method 'tell' of '_io.BufferedReader' objects}
+       15    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:986(create_module)
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.iter}
+        1    0.000    0.000    0.000    0.000 pool.py:63(ExceptionWithTraceback)
+        3    0.000    0.000    0.000    0.000 {method 'locked' of '_thread.lock' objects}
+        2    0.000    0.000    0.000    0.000 pool.py:351(_check_running)
+        3    0.000    0.000    0.000    0.000 enum.py:1292(value)
+        9    0.000    0.000    0.000    0.000 context.py:187(get_context)
+        1    0.000    0.000    0.000    0.000 synchronize.py:149(BoundedSemaphore)
+        1    0.000    0.000    0.000    0.000 pool.py:794(MapResult)
+        1    0.000    0.000    0.000    0.000 synchronize.py:166(Lock)
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1014(is_package)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.divmod}
+        1    0.000    0.000    0.000    0.000 connection.py:992(XmlListener)
+        3    0.000    0.000    0.000    0.000 {built-in method _thread.daemon_threads_allowed}
+        6    0.000    0.000    0.000    0.000 process.py:37(current_process)
+        1    0.000    0.000    0.000    0.000 context.py:237(get_context)
+        1    0.000    0.000    0.000    0.000 <string>:1(<module>)
+        1    0.000    0.000    0.000    0.000 pool.py:906(IMapUnorderedIterator)
+        1    0.000    0.000    0.000    0.000 queue.py:23(Full)
+        1    0.000    0.000    0.000    0.000 subprocess.py:123(SubprocessError)
+        1    0.000    0.000    0.000    0.000 {built-in method math.sqrt}
+        1    0.000    0.000    0.000    0.000 weakref.py:565(_Info)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap_external>:1276(__init__)
+        1    0.000    0.000    0.000    0.000 util.py:108(_platform_supports_abstract_sockets)
+
+
+
+Visualize profile: run `snakeviz bpe_train.prof`
+[MAIN] Saved vocab.json, merges.json to outputs

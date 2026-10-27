@@ -1,0 +1,4 @@
+python3 my_bpe_train.py \
+    --dataset_path dataset/TinyStories-train.txt \
+    --out_dir outputs \
+    --vocab_size 10000

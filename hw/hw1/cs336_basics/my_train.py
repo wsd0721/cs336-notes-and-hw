@@ -7,6 +7,8 @@ import argparse
 import logging
 import wandb
 import torch
+import time
+import math
 
 from my_transformer_components import TransformerLM
 from utils import load_memmap_dataset, get_batch, cross_entropy, AdamW, cosine_scheduler, gradient_clipping, save_checkpoint, load_checkpoint
@@ -38,10 +40,13 @@ def get_args():
     parser.add_argument("--cosine_iters", type=int, default=10000)
     # 数据集信息
     parser.add_argument("--dataset_path", type=str, default="dataset/train.bin")
+    parser.add_argument("--eval_interval", type=int, default=200, help="run validation every N gradient steps")
+    parser.add_argument("--val_dataset_path", type=str, default="dataset/valid.bin")
     # 注意整数id默认uint16/uint32
     parser.add_argument("--dataset_dtype", type=str, default="uint32")
     # 输出路径信息
     parser.add_argument("--out_dir", type=str, default="out")
+    parser.add_argument("--log_interval", type=int, default=20, help="log train metrics every N gradient steps")
     parser.add_argument("--log_path", type=str, default=None)
     parser.add_argument("--resume_ckpt", type=str, default=None, help="Path to checkpoint to resume from; leave None for fresh start")
     parser.add_argument("--use_wandb", action="store_true")
@@ -92,7 +97,22 @@ def setup_logger(log_file: str):
 
     return logger
 
+@torch.no_grad()
+def evaluate(model, val_dataset, batch_size, context_length, device):
+    model.eval()
+    total_loss = 0.0
+    n_batches = 10
+    for _ in range(n_batches):
+        x, y = get_batch(val_dataset, batch_size, context_length, device)
+        logits = model(x)
+        loss = cross_entropy(logits, y)
+        total_loss += loss.item()
+    avg_loss = total_loss / n_batches
+    model.train()
+    return avg_loss
+
 def main():
+    best_val_ppl = float("inf")
     # 用户参数
     args = get_args()
     device = torch.device(args.device if torch.cuda.is_available() else "cpu")
@@ -111,8 +131,11 @@ def main():
     logger = setup_logger(log_path)
     if args.use_wandb:
         setup_wandb(args)
+    # 开始计时
+    start_wall_time = time.time()
     # 数据集
     dataset = load_memmap_dataset(args.dataset_path, args.dataset_dtype)
+    val_dataset = load_memmap_dataset(args.val_dataset_path, args.dataset_dtype)
     # 模型，注意设置device
     model = TransformerLM(
         d_model=args.d_model, 
@@ -130,7 +153,7 @@ def main():
     # 加载
     start_step = 0
     if args.resume_ckpt is not None:
-        resume_ckpt_path = out_dir / args.resume_ckpt
+        resume_ckpt_path = Path(args.resume_ckpt)
         if not resume_ckpt_path.exists():
             raise FileNotFoundError(f"resume checkpoint not found: {resume_ckpt_path}")
         start_step = load_checkpoint(resume_ckpt_path, model, optim)
@@ -147,16 +170,35 @@ def main():
         loss.backward()
         gradient_clipping(model.parameters(), args.max_l2_norm)
         optim.step()
-        # 日志 + 保存
-        if i % 20 == 0:
-            val_ppl = torch.exp(loss)
+        # 日志 + 验证 + 保存
+        if i % args.log_interval == 0:
+            train_loss_val = loss.item()
+            train_ppl = math.exp(train_loss_val)
+            wall_elapsed = time.time() - start_wall_time
             log_data = {
-                "train/loss": loss.item(),
-                "train/lr": optim.get_lr(),
+                "step": i,
+                "wall_time_sec": wall_elapsed,
+                "train/loss": train_loss_val,
+                "train/ppl": train_ppl,
+                "train/lr": current_lr,
             }
+            logger.info(
+                f"step: {i}, wall {wall_elapsed:.2f}s, train loss: {train_loss_val:.4f}, train ppl: {train_ppl:.2f}, lr: {current_lr:.6f}"
+            )
+            if i % args.eval_interval == 0:
+                val_loss_val = evaluate(model, val_dataset, args.batch_size, args.context_length, device)
+                val_ppl = math.exp(val_loss_val)
+                # 保存最优模型
+                if val_ppl < best_val_ppl:
+                    best_val_ppl = val_ppl
+                    best_ckpt_path = out_dir / "ckpt_best.pt"
+                    save_checkpoint(model, optim, i, best_ckpt_path)
+                    logger.info(f"New best ckpt! val ppl={val_ppl:.2f}, save to {best_ckpt_path}")
+                log_data["val/loss"] = val_loss_val
+                log_data["val/ppl"] = val_ppl
+                logger.info(f"==== Validation ==== step {i} | val loss: {val_loss_val:.4f}, val ppl: {val_ppl:.2f}")
             if args.use_wandb:
                 wandb.log(log_data, step=i)
-            logger.info(f"step: {i}, train loss: {loss.item():.4f}, train ppl: {val_ppl.item():.2f}")
         if i % args.save_interval == 0:
             ckpt_path = out_dir / f"ckpt_{i:06d}.pt"
             save_checkpoint(model, optim, i, ckpt_path)

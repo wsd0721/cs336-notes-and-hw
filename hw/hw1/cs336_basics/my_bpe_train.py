@@ -7,6 +7,8 @@ import json
 import time
 import cProfile
 import tracemalloc
+import argparse
+from pathlib import Path
 
 def gpt2_bytes_to_unicode():
     """OpenAI GPT‑2 原版 bytes‑to‑unicode"""
@@ -217,26 +219,39 @@ def train_bpe(
     """
     # 划分边界，注意参数是bytes，即分隔符，不是所有special_tokens
     with open(input_path, 'rb') as f:
+        file_size = f.seek(0, os.SEEK_END)
+        f.seek(0)
         boundaries = find_chunk_boundaries(f, num_processes, b"<|endoftext|>")
+    print(f"[BPE] Raw file size: {file_size / 1024 / 1024:.2f} MB, split into {len(boundaries)-1} chunks")
+
     chunks = []
     for i in range(0, len(boundaries) - 1):
         chunks.append((input_path, boundaries[i], boundaries[i + 1], special_tokens))
+    print(f"[BPE] Start parallel pre-tokenize over {len(chunks)} chunks ...")
+
     # 并行预分词
     with Pool(num_processes) as pool:
         chunk_dicts = pool.map(process_chunk, chunks)
+    print(f"[BPE] Finished parallel pre-tokenize, aggregating counts ...")
+
     # 聚合预分词结果
     total_counter = Counter()
     for chunk_dict in chunk_dicts:
         total_counter.update(chunk_dict)
     word_dict = dict(total_counter)
+    print(f"[BPE] Total unique pre-token: {len(word_dict)}")
+
     # 将预分词结果增加tokens序列信息
     global_pre_tokens = {}
     for pre_token_bytes, freq in word_dict.items():
         # 将pre_token按字节拆成单字节bytes列表
         sub_tokens = [bytes([b]) for b in pre_token_bytes]
         global_pre_tokens[pre_token_bytes] = (sub_tokens, freq)
+    
     # 构建初始pair-count计数
     pair_counts = build_initial_pair_counts(word_dict)
+    print(f"[BPE] Initial pair count: {len(pair_counts)}")
+
     # 初始化词表和合并规则
     vocab = {i: bytes([i]) for i in range(256)}
     if special_tokens is not None:
@@ -244,23 +259,41 @@ def train_bpe(
             tok_bytes = tok_str.encode("utf‑8")
             vocab[len(vocab)] = tok_bytes
     merges = []
+
     # 循环合并并更新计数
+    print("[BPE] Starting merge loop ...")
+    log_interval = 50
     while len(vocab) < vocab_size:
         best_pair = max(pair_counts.items(), key=lambda x: (x[1], x[0]))[0]
+        best_cnt = pair_counts[best_pair]
         merges.append(best_pair)
         new_token = best_pair[0] + best_pair[1]
         vocab[len(vocab)] = new_token
         pair_counts = merge_and_update(global_pre_tokens, best_pair, pair_counts)
+        # 日志
+        current_step = len(merges)
+        if current_step % log_interval == 0 or len(vocab) == vocab_size:
+            print(f"[BPE Merge {current_step:4d}] vocab={len(vocab)}, top_pair={best_pair}, freq={best_cnt}, remaining_pairs={len(pair_counts)}")
+    print(f"[BPE] Merge loop done. Final vocab size: {len(vocab)}, total merges: {len(merges)}")
     return vocab, merges
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--dataset_path", type=str, default="dataset/train.txt")
+    parser.add_argument("--out_dir", type=str, default="outputs/")
+    parser.add_argument("--vocab_size", type=int, default=50257)
+    args = parser.parse_args()
+    out_dir = Path(args.out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    print(f"[MAIN] Dataset: {args.dataset_path}")
+    print(f"[MAIN] Output dir: {out_dir}")
     # Profile：内存追踪
     tracemalloc.start()
     pr = cProfile.Profile()
     pr.enable()
     # Profile；计时
     t0 = time.perf_counter()
-    vocab, merges = train_bpe('/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/TinyStoriesV2-GPT4-valid.txt', 1000, ["<|endoftext|>"])
+    vocab, merges = train_bpe(args.dataset_path, args.vocab_size, ["<|endoftext|>"])
     t1 = time.perf_counter()
     pr.disable()
     current_mem, peak_mem = tracemalloc.get_traced_memory()
@@ -273,8 +306,9 @@ if __name__ == '__main__':
     # 打印Profile
     print("\n==== Profiling top cumulative time ====")
     pr.print_stats(sort="cumulative")
-    pr.dump_stats("bpe_train.prof")
+    pr.dump_stats(out_dir / 'bpe_train.prof')
     print("\nVisualize profile: run `snakeviz bpe_train.prof`")
     # 保存vocab和merges
-    save_vocab(vocab, '/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/outputs/vocab.json')
-    save_merges(merges, '/home/wsd/diy-llm/cs336-notes-and-hw/hw/hw1/outputs/merges.json')
+    save_vocab(vocab, str(out_dir / 'vocab.json'))
+    save_merges(merges, str(out_dir / 'merges.json'))
+    print(f"[MAIN] Saved vocab.json, merges.json to {out_dir}")
